@@ -1,0 +1,87 @@
+body {
+    padding: 0;
+    margin: 0;
+    background-color: #eee;
+    overflow: hidden;
+}
+
+div[main] .content {
+    /*padding: 10px;*/
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+}
+
+
+
+div[main] {
+    overflow: auto;
+}
+
+
+.dt-wk-sri {
+    border-bottom: 1px solid black;
+}
+
+html, body {
+    height: 100%;
+}
+
+.red {
+    color: red;
+}
+
+.green {
+    color: green;
+}
+
+.msg-panel {
+    background-image: url('ignasi_pattern_s.png');
+    background-repeat: repeat;
+      position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+}
+
+
+.usuarios {
+    list-style-type:none;
+    padding-left:20px;
+}
+
+.usuarios li {
+    line-height:50px;
+}
+
+.usuarios li.offline {
+    opacity:.3;
+    cursor:not-allowed;
+}
+
+.usuarios li.online {
+    opacity:1;
+    cursor:pointer;
+}
+
+.usuarios .nome{
+   padding-left:25px;
+   border-bottom: 1px solid #eee;
+}
+
+.usuarios img{
+    height: 40px;
+    width: 40px;
+    border-radius: 50px;
+    margin-top:5px;
+}
+
+@media (max-width:768px) {
+    .usuarios img {
+        flex:1 1 23%;
+    }
+}
+

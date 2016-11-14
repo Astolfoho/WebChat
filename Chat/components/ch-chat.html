@@ -1,0 +1,81 @@
+﻿<link rel="import" href="../../bower_components/polymer/polymer.html" />
+<link rel="import" href="../../bower_components/paper-drawer-panel/paper-drawer-panel.html" />
+<link rel="import" href="../../bower_components/paper-toolbar/paper-toolbar.html" />_
+<link rel="import" href="../../bower_components/iron-icons/iron-icons.html" />_
+<link rel="import" href="../../bower_components/paper-icon-button/paper-icon-button.html" />_
+<link rel="import" href="../../bower_components/paper-material/paper-material.html" />_
+<link rel="import" href="../../bower_components/pl-components/pl-router.html" />_
+<link rel="import" href="../../bower_components/paper-header-panel/paper-header-panel.html" />_
+<link rel="import" href="../../bower_components/iron-ajax/iron-ajax.html" />
+<link rel="import" href="../../bower_components/paper-dialog/paper-dialog.html" />
+<link rel="import" href="../../bower_components/paper-input/paper-input.html" />
+<link rel="import" href="../../bower_components/paper-button/paper-button.html" />
+<link rel="import" href="./ch-chat-message.html" />
+
+<dom-module id="ch-chat">
+    <template>
+        <style>
+            #menssagens {
+                padding: 10px;
+            }
+        </style>
+        <iron-ajax id="ajaxMenssagens" url="/api/Menssagens" method="GET" handle-as="json" last-response="{{menssagens}}" content-type="application/json"></iron-ajax>
+        <div id="menssagens" class="flex column-reverse">
+            <template is="dom-repeat" items="{{menssagens}}">
+                <ch-chat-message text="{{item.conteudo}}" nome-usuario="{{item.nomeUsuarioDe}}">
+                </ch-chat-message>
+            </template>
+        </div>
+        <paper-input label="Messagem" value="{{menssagem::input}}" style="background-color:#fff;">
+            <paper-icon-button icon="send" on-tap="_enviarMensagem" suffix></paper-icon-button>
+        </paper-input>
+    </template>
+
+    <script>
+
+        Polymer({
+            is: "ch-chat",
+            ready: function () {
+                this.classList.add("column");
+                window.menssagemRecebida = function (msg) {
+                    var mes = document.createElement("ch-chat-message");
+                    mes.text = msg.conteudo;
+                    mes.me = false;
+                    mes.nomeUsuario = msg.nomeUsuarioDe;
+                    this.$.menssagens.insertBefore(mes, this.$.menssagens.firstChild);
+                }.bind(this);
+
+                this.$.ajaxMenssagens.params = {};
+                this.$.ajaxMenssagens.params.eu = window.usuario.id;
+                this.$.ajaxMenssagens.params.outro = +window.location.hashQuery["userId"];
+                this.$.ajaxMenssagens.generateRequest();
+
+                
+
+            },
+            _enviarMensagem : function() {
+                var mes = document.createElement("ch-chat-message");
+                mes.text = this.menssagem;
+                mes.me = true;
+                mes.nomeUsuario = window.usuario.nome;
+
+                this.$.menssagens.insertBefore(mes, this.$.menssagens.firstChild);
+
+                var messagem = {};
+                messagem.de = window.usuario.id;
+                messagem.para = +window.location.hashQuery["userId"];
+                messagem.conteudo = this.menssagem;
+                messagem.nomeUsuarioDe = window.usuario.nome;
+
+                window.chat.server.sendMessage(messagem);
+
+                this.mensagem = "";
+                
+            }
+        });
+
+        
+
+    </script>
+
+</dom-module>

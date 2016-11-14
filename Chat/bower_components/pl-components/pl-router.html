@@ -1,0 +1,59 @@
+<link rel="import" href="../polymer/polymer.html" />
+<link rel="import" href="../iron-ajax/iron-ajax.html" />
+
+
+<dom-module id="pl-router">
+    <template>
+        <iron-ajax id="ajax" handle-as="document"></iron-ajax>
+    </template>
+    <script>
+    Polymer({
+      is: 'pl-router',
+      properties:{
+          containerId:String,
+          defaultUrl:String,
+          rootFolder:String
+      },
+      ready:function(){
+          this.$.ajax.addEventListener("response",this.navigateAjaxResponse.bind(this));
+          window.onhashchange = this.navigate.bind(this);
+          if(!window.location.hash && this.defaultUrl)
+                window.location.navigate(this.defaultUrl);
+            else{
+                this.navigate();
+            }
+      },
+
+      navigate:function(ev){
+         var url = window.location.hashPage;
+         this.$.ajax.url = `${this.rootFolder}${url}.html`;
+         this.$.ajax.generateRequest();
+      },
+
+      navigateAjaxResponse:function(ev){
+        var count = this.parentElement.$[this.containerId]
+
+        var links = ev.detail.response.head.querySelectorAll("link[rel='import']");
+        var headHtmlText = window.document.head.innerHTML.toLowerCase();
+        for (var i = 0 ; i < links.length; i++){
+            var l = links[i];
+            if (headHtmlText.indexOf(l.href.toLowerCase()) == -1){
+                var link = document.createElement('link');
+                link.href = l.href.toLowerCase();
+                link.rel = "import";
+                document.head.appendChild(l)
+            }
+        }
+
+        count.classList.remove("trans");                   
+        count.style.opacity = 0;
+        count.innerHTML = ev.detail.response.body.innerHTML;
+
+        this.async(function(){
+            count.classList.add("trans");                  
+            count.style.opacity = 1;
+        },100);
+      }
+    });
+  </script>
+</dom-module>

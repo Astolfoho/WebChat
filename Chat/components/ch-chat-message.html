@@ -1,0 +1,71 @@
+﻿<link rel="import" href="../../bower_components/polymer/polymer.html" />
+<link rel="import" href="../../bower_components/paper-drawer-panel/paper-drawer-panel.html" />
+<link rel="import" href="../../bower_components/paper-toolbar/paper-toolbar.html" />_
+<link rel="import" href="../../bower_components/iron-icons/iron-icons.html" />_
+<link rel="import" href="../../bower_components/paper-icon-button/paper-icon-button.html" />_
+<link rel="import" href="../../bower_components/paper-material/paper-material.html" />_
+<link rel="import" href="../../bower_components/pl-components/pl-router.html" />_
+<link rel="import" href="../../bower_components/paper-header-panel/paper-header-panel.html" />_
+<link rel="import" href="../../bower_components/iron-ajax/iron-ajax.html" />
+<link rel="import" href="../../bower_components/paper-dialog/paper-dialog.html" />
+<link rel="import" href="../../bower_components/paper-input/paper-input.html" />
+<link rel="import" href="../../bower_components/paper-button/paper-button.html" />
+
+<dom-module id="ch-chat-message">
+
+    <template>
+        <style>
+            :host #text {
+                background-color: antiquewhite;
+                display: inline-block;
+                padding: 10px;
+                border-radius: 5px;
+                box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.75);
+                margin-top: 5px;
+                min-width: 100px;
+            }
+
+                :host #text.me {
+                    float: right;
+                    background-color: white;
+                }
+
+            :host ul {
+                list-style-type: none;
+                padding: 0;
+                margin: 0;
+            }
+
+            :host ul .nome{
+                font-size:80%;
+                text-align:right;
+                font-weight:bold;
+                color:cornflowerblue;
+            }
+        </style>
+
+        <div id="text" class$="{{_msgClass(me)}}">
+            <ul>
+                <li class="nome">{{nomeUsuario}}</li>
+                <li class="conteudo">{{text}}</li>
+            </ul>
+        </div>
+    </template>
+
+    <script>
+
+        Polymer({
+            is: "ch-chat-message",
+            properties: {
+                text: String,
+                me: Boolean,
+                nomeUsuario: String
+            },
+            _msgClass: function (me) {
+                return me ? "me" : "other";
+            }
+        });
+
+    </script>
+
+</dom-module>

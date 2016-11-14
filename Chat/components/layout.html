@@ -1,0 +1,149 @@
+﻿<link rel="import" href="../../bower_components/polymer/polymer.html" />
+<link rel="import" href="../../bower_components/paper-drawer-panel/paper-drawer-panel.html" />
+<link rel="import" href="../../bower_components/paper-toolbar/paper-toolbar.html" />_
+<link rel="import" href="../../bower_components/iron-icons/iron-icons.html" />_
+<link rel="import" href="../../bower_components/paper-icon-button/paper-icon-button.html" />_
+<link rel="import" href="../../bower_components/paper-material/paper-material.html" />_
+<link rel="import" href="../../bower_components/pl-components/pl-router.html" />_
+<link rel="import" href="../../bower_components/paper-header-panel/paper-header-panel.html" />_
+<link rel="import" href="../../bower_components/iron-ajax/iron-ajax.html" />
+<link rel="import" href="../../bower_components/paper-dialog/paper-dialog.html" />
+<link rel="import" href="../../bower_components/paper-input/paper-input.html" />
+<link rel="import" href="../../bower_components/paper-button/paper-button.html" />
+
+<dom-module id="ch-layout">
+    <template>
+        <pl-router container-id="content" default-url="index" root-folder="/views"></pl-router>
+        <!--<iron-ajax auto id="onlineUsersAjax" url="/api/Usuarios"  on-response="_addTimeout" handle-as="json" last-response="{{usuarios}}"></iron-ajax>-->
+        <iron-ajax id="postUser" url="/api/Usuarios" method="POST" body="{{usuario}}" last-response="{{usuario}}" on-response="_usuarioSalvo" handle-as="json" content-type="application/json"></iron-ajax>
+        <paper-header-panel>
+            <paper-toolbar class="paper-header">
+                <paper-icon-button icon="menu" on-click="_tooglePanel"></paper-icon-button>
+                <div class="title">Treinos</div>
+                <paper-icon-button icon="more-vert"></paper-icon-button>
+            </paper-toolbar>
+            <paper-drawer-panel id="drawer">
+                <div drawer>
+                    <ul class="usuarios">
+                        <template is="dom-repeat" items="{{usuarios}}">
+                            <template is="dom-if" if="{{_isMe(item.id)}}">
+                                <li class$="row {{_usersClass(item.estaOnline)}}" on-tap="_showMessages">
+                                    <img class="" src="[[item.foto]]" />
+                                    <div class="nome flex">
+                                        [[item.nome]]
+                                        <template is="dom-if" if="{{_showNoty(item.unreadMsgs)}}">
+                                            ({{item.unreadMsgs}})
+                                        </template>
+                                    </div>
+                                </li>
+                            </template>
+                        </template>
+                    </ul>
+                </div>
+                <div main>
+                    <div class="content" id="content">
+
+                    </div>
+                </div>
+            </paper-drawer-panel>
+        </paper-header-panel>
+        <paper-dialog class="bw-30" id="newUser" modal>
+            <h2>Novo usúario!</h2>
+            <paper-input label="Nome" typeof="text" value="{{usuario.nome::input}}"></paper-input>
+            <div class="buttons">
+                <paper-button raised on-tap="_salvarUsuario">Salvar</paper-button>
+            </div>
+        </paper-dialog>
+
+
+    </template>
+
+    <script>
+
+        Polymer({
+            is: "ch-layout",
+            _tooglePanel: function () {
+                this.$.drawer.togglePanel();
+            },
+            ready: function () {
+                var context = this;
+                var chat = $.connection.chatHub;
+                window.chat = chat;
+                chat.client.atualizarUsuarios = function (data) {
+                    context.usuarios = data;
+                }
+
+                chat.client.menssagemRecebida = function (msg) {
+                    for (var i = 0 ; i < this.usuarios.length; i++) {
+                        var usr = this.usuarios[i];
+                        if (usr.id == msg.para) {
+                            var um = usr.unreadMsgs || 0;
+                            um++;
+                            this.set('usuarios.' + i.toString() + '.unreadMsgs', um);
+                        }
+                    }
+
+                    if (msg.de == +window.location.hashQuery["userId"]) {
+                        if (window.menssagemRecebida)
+                            window.menssagemRecebida(msg);
+                    }
+                }.bind(this)
+
+                $.connection.hub.start().done(function () {
+
+                    var usuario = window.localStorage.getItem("user");
+                    if (!usuario) {
+                        this.usuario = {};
+                        this.usuario.signalrId = $.connection.hub.id;
+                        this.$.newUser.open();
+                    } else {
+                        window.usuario = JSON.parse(usuario);
+                        this.usuario = window.usuario;
+                        this.usuario.estaOnline = true;
+                        this.usuario.signalrId = $.connection.hub.id;
+                        this._salvarUsuario();
+                    }
+
+                    chat.server.pegarUsuarios().done(function (data) {
+                        this.usuarios = data;
+                    });
+                }.bind(this));
+
+                $(window).unload(function (event) {
+                    context.usuario.estaOnline = false;
+                    context._salvarUsuario();
+                });
+            },
+            _salvarUsuario: function () {
+                //this.$.postUser.body = this.usuario;
+                this.$.postUser.generateRequest();
+            },
+
+
+
+            _usuarioSalvo: function () {
+                window.usuario = this.usuario;
+                window.localStorage.setItem("user", JSON.stringify(this.usuario));
+                this.$.newUser.close();
+            },
+
+            _usersClass: function (estaOnline) {
+                return estaOnline ? "online" : "offline"
+            },
+
+            _showMessages: function (ev) {
+                window.location.navigate("mensagens", { userId: ev.model.item.id });
+            },
+            _showNoty: function (um) {
+                return um != undefined && um > 0;
+            },
+            _isMe: function (id) {
+                return this.usuario.id != id;
+            }
+
+
+        });
+
+    </script>
+
+</dom-module>

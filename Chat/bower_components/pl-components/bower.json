@@ -1,0 +1,25 @@
+{
+  "name": "pl-components",
+  "homepage": "https://github.com/Astolfoho/pl-components",
+  "authors": [
+    "astolfo <astolfo-hoscher@hotmail.com>"
+  ],
+  "description": "",
+  "main": "",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "version": "0.0.5",
+  "dependencies": {
+    "polymer": "^1.7.0",
+    "iron-ajax": "^1.4.3",
+    "paper-button": "^1.0.13",
+    "paper-material": "^1.0.6",
+    "iron-icons": "^1.1.3"
+  }
+}

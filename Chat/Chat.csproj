@@ -1,0 +1,996 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.Default.props" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.Default.props')" />
+  <Import Project="..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props" Condition="Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" />
+  <Import Project="..\packages\Microsoft.Net.Compilers.1.0.0\build\Microsoft.Net.Compilers.props" Condition="Exists('..\packages\Microsoft.Net.Compilers.1.0.0\build\Microsoft.Net.Compilers.props')" />
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{FEBF0C75-2EED-47B2-85C5-318463AF96C7}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Chat</RootNamespace>
+    <AssemblyName>Chat</AssemblyName>
+    <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
+    <UseIISExpress>false</UseIISExpress>
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+    <UseGlobalApplicationHostFile />
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+    <ApplicationInsightsResourceId>/subscriptions/567f53c9-368e-4518-b6f9-85d7c30dfe9c/resourcegroups/Default-ApplicationInsights-CentralUS/providers/microsoft.insights/components/Chat</ApplicationInsightsResourceId>
+    <TypeScriptToolsVersion>1.8</TypeScriptToolsVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.AI.Agent.Intercept, Version=1.2.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ApplicationInsights.Agent.Intercept.1.2.1\lib\net45\Microsoft.AI.Agent.Intercept.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.AI.DependencyCollector, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ApplicationInsights.DependencyCollector.2.0.0\lib\net45\Microsoft.AI.DependencyCollector.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.AI.PerfCounterCollector, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ApplicationInsights.PerfCounterCollector.2.0.0\lib\net45\Microsoft.AI.PerfCounterCollector.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.AI.ServerTelemetryChannel, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ApplicationInsights.WindowsServer.TelemetryChannel.2.0.0\lib\net45\Microsoft.AI.ServerTelemetryChannel.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.AI.Web, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ApplicationInsights.Web.2.0.0\lib\net45\Microsoft.AI.Web.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.AI.WindowsServer, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ApplicationInsights.WindowsServer.2.0.0\lib\net45\Microsoft.AI.WindowsServer.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.ApplicationInsights, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ApplicationInsights.2.0.0\lib\net46\Microsoft.ApplicationInsights.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.SignalR.Core, Version=2.2.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.SignalR.Core.2.2.1\lib\net45\Microsoft.AspNet.SignalR.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.SignalR.SystemWeb, Version=2.2.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.SignalR.SystemWeb.2.2.1\lib\net45\Microsoft.AspNet.SignalR.SystemWeb.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.Owin, Version=3.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.3.0.1\lib\net45\Microsoft.Owin.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Host.SystemWeb, Version=3.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.Host.SystemWeb.3.0.1\lib\net45\Microsoft.Owin.Host.SystemWeb.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security, Version=2.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.Security.2.1.0\lib\net45\Microsoft.Owin.Security.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.6.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Owin, Version=1.0.0.0, Culture=neutral, PublicKeyToken=f0ebd12fd5e55cc5, processorArchitecture=MSIL">
+      <HintPath>..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Net.Http.Formatting, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.3\lib\net45\System.Net.Http.Formatting.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Http, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.5.2.3\lib\net45\System.Web.Http.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.Http.WebHost, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.WebHost.5.2.3\lib\net45\System.Web.Http.WebHost.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="App_Data\Database.mdf" />
+    <Content Include="App_Data\Database_log.ldf">
+      <DependentUpon>Database.mdf</DependentUpon>
+    </Content>
+    <Content Include="components\ch-chat-message.html" />
+    <Content Include="ignasi_pattern_s.png" />
+    <Content Include="packages.config" />
+    <Content Include="ApplicationInsights.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="bower.json" />
+    <None Include="scripts\jquery-1.6.4-vsdoc.js" />
+    <Content Include="scripts\jquery-1.6.4.js" />
+    <Content Include="scripts\jquery-1.6.4.min.js" />
+    <Content Include="scripts\jquery.signalR-2.2.1.js" />
+    <Content Include="scripts\jquery.signalR-2.2.1.min.js" />
+    <Content Include="Service References\Application Insights\ConnectedService.json" />
+    <Content Include="bower_components\font-roboto\.bower.json" />
+    <Content Include="bower_components\font-roboto\bower.json" />
+    <Content Include="bower_components\font-roboto\README.md" />
+    <Content Include="bower_components\iron-a11y-announcer\.bower.json" />
+    <Content Include="bower_components\iron-a11y-announcer\.github\ISSUE_TEMPLATE.md" />
+    <Content Include="bower_components\iron-a11y-announcer\.travis.yml" />
+    <Content Include="bower_components\iron-a11y-announcer\bower.json" />
+    <Content Include="bower_components\iron-a11y-announcer\CONTRIBUTING.md" />
+    <Content Include="bower_components\iron-a11y-announcer\README.md" />
+    <Content Include="bower_components\iron-a11y-keys-behavior\.bower.json" />
+    <Content Include="bower_components\iron-a11y-keys-behavior\.github\ISSUE_TEMPLATE.md" />
+    <Content Include="bower_components\iron-a11y-keys-behavior\.travis.yml" />
+    <Content Include="bower_components\iron-a11y-keys-behavior\bower.json" />
+    <Content Include="bower_components\iron-a11y-keys-behavior\CONTRIBUTING.md" />
+    <Content Include="bower_components\iron-a11y-keys-behavior\README.md" />
+    <Content Include="bower_components\iron-autogrow-textarea\.bower.json" />
+    <Content Include="bower_components\iron-autogrow-textarea\.github\ISSUE_TEMPLATE.md" />
+    <Content Include="bower_components\iron-autogrow-textarea\.travis.yml" />
+    <Content Include="bower_components\iron-autogrow-textarea\bower.json" />
+    <Content Include="bower_components\iron-autogrow-textarea\CONTRIBUTING.md" />
+    <Content Include="bower_components\iron-autogrow-textarea\README.md" />
+    <Content Include="bower_components\iron-behaviors\.bower.json" />
+    <Content Include="bower_components\iron-behaviors\.github\ISSUE_TEMPLATE.md" />
+    <Content Include="bower_components\iron-behaviors\.travis.yml" />
+    <Content Include="bower_components\iron-behaviors\bower.json" />
+    <Content Include="bower_components\iron-behaviors\CONTRIBUTING.md" />
+    <Content Include="bower_components\iron-behaviors\README.md" />
+    <Content Include="bower_components\iron-checked-element-behavior\.bower.json" />
+    <Content Include="bower_components\iron-checked-element-behavior\.github\ISSUE_TEMPLATE.md" />
+    <Content Include="bower_components\iron-checked-element-behavior\.travis.yml" />
+    <Content Include="bower_components\iron-checked-element-behavior\bower.json" />
+    <Content Include="bower_components\iron-checked-element-behavior\CONTRIBUTING.md" />
+    <Content Include="bower_components\iron-checked-element-behavior\README.md" />
+    <Content Include="bower_components\iron-collapse\.bower.json" />
+    <Content Include="bower_components\iron-collapse\.github\ISSUE_TEMPLATE.md" />
+    <Content Include="bower_components\iron-collapse\.travis.yml" />
+    <Content Include="bower_components\iron-collapse\bower.json" />
+    <Content Include="bower_components\iron-collapse\CONTRIBUTING.md" />
+    <Content Include="bower_components\iron-collapse\README.md" />
+    <Content Include="bower_components\iron-flex-layout\.bower.json" />
+    <Content Include="bower_components\iron-flex-layout\.travis.yml" />
+    <Content Include="bower_components\iron-flex-layout\bower.json" />
+    <Content Include="bower_components\iron-flex-layout\CONTRIBUTING.md" />
+    <Content Include="bower_components\iron-flex-layout\README.md" />
+    <Content Include="bower_components\iron-form-element-behavior\.bower.json" />
+    <Content Include="bower_components\iron-form-element-behavior\.travis.yml" />
+    <Content Include="bower_components\iron-form-element-behavior\bower.json" />
+    <Content Include="bower_components\iron-form-element-behavior\CONTRIBUTING.md" />
+    <Content Include="bower_components\iron-form-element-behavior\README.md" />
+    <Content Include="bower_components\iron-iconset-svg\.bower.json" />
+    <Content Include="bower_components\iron-iconset-svg\.github\ISSUE_TEMPLATE.md" />
+    <Content Include="bower_components\iron-iconset-svg\.travis.yml" />
+    <Content Include="bower_components\iron-iconset-svg\bower.json" />
+    <Content Include="bower_components\iron-iconset-svg\CONTRIBUTING.md" />
+    <Content Include="bower_components\iron-iconset-svg\README.md" />
+    <Content Include="bower_components\iron-icons\.bower.json" />
+    <Content Include="bower_components\iron-icons\.travis.yml" />
+    <Content Include="bower_components\iron-icons\bower.json" />
+    <Content Include="bower_components\iron-icons\CONTRIBUTING.md" />
+    <Content Include="bower_components\iron-icons\README.md" />
+    <Content Include="bower_components\iron-icon\.bower.json" />
+    <Content Include="bower_components\iron-icon\.github\ISSUE_TEMPLATE.md" />
+    <Content Include="bower_components\iron-icon\.travis.yml" />
+    <Content Include="bower_components\iron-icon\bower.json" />
+    <Content Include="bower_components\iron-icon\CONTRIBUTING.md" />
+    <Content Include="bower_components\iron-icon\README.md" />
+    <Content Include="bower_components\iron-image\.bower.json" />
+    <Content Include="bower_components\iron-image\.github\ISSUE_TEMPLATE.md" />
+    <Content Include="bower_components\iron-image\.travis.yml" />
+    <Content Include="bower_components\iron-image\bower.json" />
+    <Content Include="bower_components\iron-image\CONTRIBUTING.md" />
+    <Content Include="bower_components\iron-image\README.md" />
+    <Content Include="bower_components\iron-input\.bower.json" />
+    <Content Include="bower_components\iron-input\.github\ISSUE_TEMPLATE.md" />
+    <Content Include="bower_components\iron-input\.travis.yml" />
+    <Content Include="bower_components\iron-input\bower.json" />
+    <Content Include="bower_components\iron-input\CONTRIBUTING.md" />
+    <Content Include="bower_components\iron-input\README.md" />
+    <Content Include="bower_components\iron-media-query\.bower.json" />
+    <Content Include="bower_components\iron-media-query\.travis.yml" />
+    <Content Include="bower_components\iron-media-query\bower.json" />
+    <Content Include="bower_components\iron-media-query\CONTRIBUTING.md" />
+    <Content Include="bower_components\iron-media-query\README.md" />
+    <Content Include="bower_components\iron-menu-behavior\.bower.json" />
+    <Content Include="bower_components\iron-menu-behavior\.github\ISSUE_TEMPLATE.md" />
+    <Content Include="bower_components\iron-menu-behavior\.travis.yml" />
+    <Content Include="bower_components\iron-menu-behavior\bower.json" />
+    <Content Include="bower_components\iron-menu-behavior\CONTRIBUTING.md" />
+    <Content Include="bower_components\iron-menu-behavior\README.md" />
+    <Content Include="bower_components\iron-meta\.bower.json" />
+    <Content Include="bower_components\iron-meta\.github\ISSUE_TEMPLATE.md" />
+    <Content Include="bower_components\iron-meta\.travis.yml" />
+    <Content Include="bower_components\iron-meta\bower.json" />
+    <Content Include="bower_components\iron-meta\CONTRIBUTING.md" />
+    <Content Include="bower_components\iron-meta\README.md" />
+    <Content Include="bower_components\iron-resizable-behavior\.bower.json" />
+    <Content Include="bower_components\iron-resizable-behavior\.github\ISSUE_TEMPLATE.md" />
+    <Content Include="bower_components\iron-resizable-behavior\.travis.yml" />
+    <Content Include="bower_components\iron-resizable-behavior\bower.json" />
+    <Content Include="bower_components\iron-resizable-behavior\CONTRIBUTING.md" />
+    <Content Include="bower_components\iron-resizable-behavior\README.md" />
+    <Content Include="bower_components\iron-selector\.bower.json" />
+    <Content Include="bower_components\iron-selector\.github\ISSUE_TEMPLATE.md" />
+    <Content Include="bower_components\iron-selector\.travis.yml" />
+    <Content Include="bower_components\iron-selector\bower.json" />
+    <Content Include="bower_components\iron-selector\CONTRIBUTING.md" />
+    <Content Include="bower_components\iron-selector\README.md" />
+    <Content Include="bower_components\iron-validatable-behavior\.bower.json" />
+    <Content Include="bower_components\iron-validatable-behavior\.github\ISSUE_TEMPLATE.md" />
+    <Content Include="bower_components\iron-validatable-behavior\.travis.yml" />
+    <Content Include="bower_components\iron-validatable-behavior\bower.json" />
+    <Content Include="bower_components\iron-validatable-behavior\CONTRIBUTING.md" />
+    <Content Include="bower_components\iron-validatable-behavior\README.md" />
+    <Content Include="bower_components\paper-behaviors\.bower.json" />
+    <Content Include="bower_components\paper-behaviors\.github\ISSUE_TEMPLATE.md" />
+    <Content Include="bower_components\paper-behaviors\.travis.yml" />
+    <Content Include="bower_components\paper-behaviors\bower.json" />
+    <Content Include="bower_components\paper-behaviors\CONTRIBUTING.md" />
+    <Content Include="bower_components\paper-behaviors\README.md" />
+    <Content Include="bower_components\paper-button\.bower.json" />
+    <Content Include="bower_components\paper-button\.github\ISSUE_TEMPLATE.md" />
+    <Content Include="bower_components\paper-button\.travis.yml" />
+    <Content Include="bower_components\paper-button\bower.json" />
+    <Content Include="bower_components\paper-button\CONTRIBUTING.md" />
+    <Content Include="bower_components\paper-button\README.md" />
+    <Content Include="bower_components\paper-card\.bower.json" />
+    <Content Include="bower_components\paper-card\.github\ISSUE_TEMPLATE.md" />
+    <Content Include="bower_components\paper-card\.travis.yml" />
+    <Content Include="bower_components\paper-card\bower.json" />
+    <Content Include="bower_components\paper-card\CONTRIBUTING.md" />
+    <Content Include="bower_components\paper-card\README.md" />
+    <Content Include="bower_components\paper-drawer-panel\.bower.json" />
+    <Content Include="bower_components\paper-drawer-panel\.github\ISSUE_TEMPLATE.md" />
+    <Content Include="bower_components\paper-drawer-panel\.travis.yml" />
+    <Content Include="bower_components\paper-drawer-panel\bower.json" />
+    <Content Include="bower_components\paper-drawer-panel\CONTRIBUTING.md" />
+    <Content Include="bower_components\paper-drawer-panel\README.md" />
+    <Content Include="bower_components\paper-header-panel\.bower.json" />
+    <Content Include="bower_components\paper-header-panel\.github\ISSUE_TEMPLATE.md" />
+    <Content Include="bower_components\paper-header-panel\.travis.yml" />
+    <Content Include="bower_components\paper-header-panel\bower.json" />
+    <Content Include="bower_components\paper-header-panel\CONTRIBUTING.md" />
+    <Content Include="bower_components\paper-header-panel\README.md" />
+    <Content Include="bower_components\paper-icon-button\.bower.json" />
+    <Content Include="bower_components\paper-icon-button\.github\ISSUE_TEMPLATE.md" />
+    <Content Include="bower_components\paper-icon-button\.travis.yml" />
+    <Content Include="bower_components\paper-icon-button\bower.json" />
+    <Content Include="bower_components\paper-icon-button\CONTRIBUTING.md" />
+    <Content Include="bower_components\paper-icon-button\README.md" />
+    <Content Include="bower_components\paper-input\.bower.json" />
+    <Content Include="bower_components\paper-input\.github\ISSUE_TEMPLATE.md" />
+    <Content Include="bower_components\paper-input\.travis.yml" />
+    <Content Include="bower_components\paper-input\bower.json" />
+    <Content Include="bower_components\paper-input\CONTRIBUTING.md" />
+    <Content Include="bower_components\paper-input\README.md" />
+    <Content Include="bower_components\paper-item\.bower.json" />
+    <Content Include="bower_components\paper-item\.github\ISSUE_TEMPLATE.md" />
+    <Content Include="bower_components\paper-item\.travis.yml" />
+    <Content Include="bower_components\paper-item\bower.json" />
+    <Content Include="bower_components\paper-item\CONTRIBUTING.md" />
+    <Content Include="bower_components\paper-item\README.md" />
+    <Content Include="bower_components\paper-material\.bower.json" />
+    <Content Include="bower_components\paper-material\.travis.yml" />
+    <Content Include="bower_components\paper-material\bower.json" />
+    <Content Include="bower_components\paper-material\CONTRIBUTING.md" />
+    <Content Include="bower_components\paper-material\README.md" />
+    <Content Include="bower_components\paper-menu\.bower.json" />
+    <Content Include="bower_components\paper-menu\.travis.yml" />
+    <Content Include="bower_components\paper-menu\bower.json" />
+    <Content Include="bower_components\paper-menu\CONTRIBUTING.md" />
+    <Content Include="bower_components\paper-menu\README.md" />
+    <Content Include="bower_components\paper-ripple\.bower.json" />
+    <Content Include="bower_components\paper-ripple\.github\ISSUE_TEMPLATE.md" />
+    <Content Include="bower_components\paper-ripple\.travis.yml" />
+    <Content Include="bower_components\paper-ripple\bower.json" />
+    <Content Include="bower_components\paper-ripple\CONTRIBUTING.md" />
+    <Content Include="bower_components\paper-ripple\README.md" />
+    <Content Include="bower_components\paper-styles\.bower.json" />
+    <Content Include="bower_components\paper-styles\bower.json" />
+    <Content Include="bower_components\paper-styles\CONTRIBUTING.md" />
+    <Content Include="bower_components\paper-styles\README.md" />
+    <Content Include="bower_components\paper-toolbar\.bower.json" />
+    <Content Include="bower_components\paper-toolbar\.github\ISSUE_TEMPLATE.md" />
+    <Content Include="bower_components\paper-toolbar\.travis.yml" />
+    <Content Include="bower_components\paper-toolbar\bower.json" />
+    <Content Include="bower_components\paper-toolbar\CONTRIBUTING.md" />
+    <Content Include="bower_components\paper-toolbar\README.md" />
+    <Content Include="bower_components\polymer\.bower.json" />
+    <Content Include="bower_components\polymer\bower.json" />
+    <Content Include="bower_components\polymer\build.log" />
+    <Content Include="bower_components\webcomponentsjs\.bower.json" />
+    <Content Include="bower_components\webcomponentsjs\bower.json" />
+    <Content Include="bower_components\webcomponentsjs\build.log" />
+    <Content Include="bower_components\webcomponentsjs\package.json" />
+    <Content Include="bower_components\webcomponentsjs\README.md" />
+    <Content Include="bower_components\iron-ajax\.bower.json" />
+    <Content Include="bower_components\iron-ajax\.github\ISSUE_TEMPLATE.md" />
+    <Content Include="bower_components\iron-ajax\.travis.yml" />
+    <Content Include="bower_components\iron-ajax\bower.json" />
+    <Content Include="bower_components\iron-ajax\CONTRIBUTING.md" />
+    <Content Include="bower_components\iron-ajax\README.md" />
+    <Content Include="bower_components\iron-fit-behavior\.bower.json" />
+    <Content Include="bower_components\iron-fit-behavior\.github\ISSUE_TEMPLATE.md" />
+    <Content Include="bower_components\iron-fit-behavior\.travis.yml" />
+    <Content Include="bower_components\iron-fit-behavior\bower.json" />
+    <Content Include="bower_components\iron-fit-behavior\CONTRIBUTING.md" />
+    <Content Include="bower_components\iron-fit-behavior\README.md" />
+    <Content Include="bower_components\iron-overlay-behavior\.bower.json" />
+    <Content Include="bower_components\iron-overlay-behavior\.github\ISSUE_TEMPLATE.md" />
+    <Content Include="bower_components\iron-overlay-behavior\.travis.yml" />
+    <Content Include="bower_components\iron-overlay-behavior\bower.json" />
+    <Content Include="bower_components\iron-overlay-behavior\CONTRIBUTING.md" />
+    <Content Include="bower_components\iron-overlay-behavior\README.md" />
+    <Content Include="bower_components\neon-animation\.bower.json" />
+    <Content Include="bower_components\neon-animation\.github\ISSUE_TEMPLATE.md" />
+    <Content Include="bower_components\neon-animation\.travis.yml" />
+    <Content Include="bower_components\neon-animation\bower.json" />
+    <Content Include="bower_components\neon-animation\CONTRIBUTING.md" />
+    <Content Include="bower_components\neon-animation\guides\neon-animation.md" />
+    <Content Include="bower_components\neon-animation\README.md" />
+    <Content Include="bower_components\paper-dialog-behavior\.bower.json" />
+    <Content Include="bower_components\paper-dialog-behavior\.github\ISSUE_TEMPLATE.md" />
+    <Content Include="bower_components\paper-dialog-behavior\.travis.yml" />
+    <Content Include="bower_components\paper-dialog-behavior\bower.json" />
+    <Content Include="bower_components\paper-dialog-behavior\CONTRIBUTING.md" />
+    <Content Include="bower_components\paper-dialog-behavior\README.md" />
+    <Content Include="bower_components\paper-dialog\.bower.json" />
+    <Content Include="bower_components\paper-dialog\.github\ISSUE_TEMPLATE.md" />
+    <Content Include="bower_components\paper-dialog\.travis.yml" />
+    <Content Include="bower_components\paper-dialog\bower.json" />
+    <Content Include="bower_components\paper-dialog\CONTRIBUTING.md" />
+    <Content Include="bower_components\paper-dialog\README.md" />
+    <Content Include="bower_components\pl-components\.bower.json" />
+    <Content Include="bower_components\pl-components\bower.json" />
+    <Content Include="bower_components\promise-polyfill\.bower.json" />
+    <Content Include="bower_components\promise-polyfill\bower.json" />
+    <Content Include="bower_components\promise-polyfill\CONTRIBUTING.md" />
+    <Content Include="bower_components\promise-polyfill\LICENSE" />
+    <Content Include="bower_components\promise-polyfill\package.json" />
+    <Content Include="bower_components\promise-polyfill\README.md" />
+    <Content Include="bower_components\web-animations-js\.bower.json" />
+    <Content Include="bower_components\web-animations-js\bower.json" />
+    <Content Include="bower_components\web-animations-js\CONTRIBUTING.md" />
+    <Content Include="bower_components\web-animations-js\COPYING" />
+    <Content Include="bower_components\web-animations-js\History.md" />
+    <Content Include="bower_components\web-animations-js\README.md" />
+    <Content Include="bower_components\web-animations-js\web-animations-next-lite.min.js.map" />
+    <Content Include="bower_components\web-animations-js\web-animations-next.min.js.map" />
+    <Content Include="bower_components\web-animations-js\web-animations.min.js.map" />
+    <None Include="Properties\PublishProfiles\ChatPos - Web Deploy.pubxml" />
+    <None Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+    <None Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="base.css" />
+    <Content Include="bower_components\font-roboto\roboto.html" />
+    <Content Include="bower_components\iron-a11y-announcer\.gitignore" />
+    <Content Include="bower_components\iron-a11y-announcer\demo\index.html" />
+    <Content Include="bower_components\iron-a11y-announcer\demo\x-announces.html" />
+    <Content Include="bower_components\iron-a11y-announcer\index.html" />
+    <Content Include="bower_components\iron-a11y-announcer\iron-a11y-announcer.html" />
+    <Content Include="bower_components\iron-a11y-announcer\test\index.html" />
+    <Content Include="bower_components\iron-a11y-announcer\test\iron-a11y-announcer.html" />
+    <Content Include="bower_components\iron-a11y-keys-behavior\.gitignore" />
+    <Content Include="bower_components\iron-a11y-keys-behavior\demo\index.html" />
+    <Content Include="bower_components\iron-a11y-keys-behavior\demo\x-key-aware.html" />
+    <Content Include="bower_components\iron-a11y-keys-behavior\index.html" />
+    <Content Include="bower_components\iron-a11y-keys-behavior\iron-a11y-keys-behavior.html" />
+    <Content Include="bower_components\iron-a11y-keys-behavior\test\basic-test.html" />
+    <Content Include="bower_components\iron-a11y-keys-behavior\test\index.html" />
+    <Content Include="bower_components\iron-ajax\.gitignore" />
+    <Content Include="bower_components\iron-ajax\demo\index.html" />
+    <Content Include="bower_components\iron-ajax\hero.svg" />
+    <Content Include="bower_components\iron-ajax\index.html" />
+    <Content Include="bower_components\iron-ajax\iron-ajax.html" />
+    <Content Include="bower_components\iron-ajax\iron-request.html" />
+    <Content Include="bower_components\iron-ajax\test\index.html" />
+    <Content Include="bower_components\iron-ajax\test\iron-ajax.html" />
+    <Content Include="bower_components\iron-ajax\test\iron-request.html" />
+    <Content Include="bower_components\iron-autogrow-textarea\.gitignore" />
+    <Content Include="bower_components\iron-autogrow-textarea\demo\index.html" />
+    <Content Include="bower_components\iron-autogrow-textarea\hero.svg" />
+    <Content Include="bower_components\iron-autogrow-textarea\index.html" />
+    <Content Include="bower_components\iron-autogrow-textarea\iron-autogrow-textarea.html" />
+    <Content Include="bower_components\iron-autogrow-textarea\test\basic.html" />
+    <Content Include="bower_components\iron-autogrow-textarea\test\index.html" />
+    <Content Include="bower_components\iron-behaviors\.gitignore" />
+    <Content Include="bower_components\iron-behaviors\demo\index.html" />
+    <Content Include="bower_components\iron-behaviors\demo\simple-button.html" />
+    <Content Include="bower_components\iron-behaviors\index.html" />
+    <Content Include="bower_components\iron-behaviors\iron-button-state.html" />
+    <Content Include="bower_components\iron-behaviors\iron-control-state.html" />
+    <Content Include="bower_components\iron-behaviors\test\active-state.html" />
+    <Content Include="bower_components\iron-behaviors\test\disabled-state.html" />
+    <Content Include="bower_components\iron-behaviors\test\focused-state.html" />
+    <Content Include="bower_components\iron-behaviors\test\index.html" />
+    <Content Include="bower_components\iron-behaviors\test\test-elements.html" />
+    <Content Include="bower_components\iron-checked-element-behavior\.gitignore" />
+    <Content Include="bower_components\iron-checked-element-behavior\demo\index.html" />
+    <Content Include="bower_components\iron-checked-element-behavior\demo\simple-checkbox.html" />
+    <Content Include="bower_components\iron-checked-element-behavior\index.html" />
+    <Content Include="bower_components\iron-checked-element-behavior\iron-checked-element-behavior.html" />
+    <Content Include="bower_components\iron-checked-element-behavior\test\basic.html" />
+    <Content Include="bower_components\iron-checked-element-behavior\test\index.html" />
+    <Content Include="bower_components\iron-checked-element-behavior\test\simple-checkbox.html" />
+    <Content Include="bower_components\iron-collapse\.gitignore" />
+    <Content Include="bower_components\iron-collapse\demo\index.html" />
+    <Content Include="bower_components\iron-collapse\hero.svg" />
+    <Content Include="bower_components\iron-collapse\index.html" />
+    <Content Include="bower_components\iron-collapse\iron-collapse.html" />
+    <Content Include="bower_components\iron-collapse\test\a11y.html" />
+    <Content Include="bower_components\iron-collapse\test\basic.html" />
+    <Content Include="bower_components\iron-collapse\test\flex.html" />
+    <Content Include="bower_components\iron-collapse\test\horizontal.html" />
+    <Content Include="bower_components\iron-collapse\test\index.html" />
+    <Content Include="bower_components\iron-collapse\test\nested.html" />
+    <Content Include="bower_components\iron-fit-behavior\.gitignore" />
+    <Content Include="bower_components\iron-fit-behavior\demo\index.html" />
+    <Content Include="bower_components\iron-fit-behavior\demo\simple-fit.html" />
+    <Content Include="bower_components\iron-fit-behavior\index.html" />
+    <Content Include="bower_components\iron-fit-behavior\iron-fit-behavior.html" />
+    <Content Include="bower_components\iron-fit-behavior\test\index.html" />
+    <Content Include="bower_components\iron-fit-behavior\test\iron-fit-behavior.html" />
+    <Content Include="bower_components\iron-fit-behavior\test\test-fit.html" />
+    <Content Include="bower_components\iron-flex-layout\.gitignore" />
+    <Content Include="bower_components\iron-flex-layout\classes\iron-flex-layout.html" />
+    <Content Include="bower_components\iron-flex-layout\classes\iron-shadow-flex-layout.html" />
+    <Content Include="bower_components\iron-flex-layout\demo\index.html" />
+    <Content Include="bower_components\iron-flex-layout\index.html" />
+    <Content Include="bower_components\iron-flex-layout\iron-flex-layout-classes.html" />
+    <Content Include="bower_components\iron-flex-layout\iron-flex-layout.html" />
+    <Content Include="bower_components\iron-flex-layout\test\index.html" />
+    <Content Include="bower_components\iron-flex-layout\test\iron-flex-layout-classes.html" />
+    <Content Include="bower_components\iron-flex-layout\test\iron-flex-layout.html" />
+    <Content Include="bower_components\iron-form-element-behavior\.gitignore" />
+    <Content Include="bower_components\iron-form-element-behavior\demo\index.html" />
+    <Content Include="bower_components\iron-form-element-behavior\demo\simple-element.html" />
+    <Content Include="bower_components\iron-form-element-behavior\demo\simple-form.html" />
+    <Content Include="bower_components\iron-form-element-behavior\index.html" />
+    <Content Include="bower_components\iron-form-element-behavior\iron-form-element-behavior.html" />
+    <Content Include="bower_components\iron-form-element-behavior\test\basic.html" />
+    <Content Include="bower_components\iron-form-element-behavior\test\index.html" />
+    <Content Include="bower_components\iron-form-element-behavior\test\simple-element.html" />
+    <Content Include="bower_components\iron-form-element-behavior\test\simple-form.html" />
+    <Content Include="bower_components\iron-iconset-svg\.gitignore" />
+    <Content Include="bower_components\iron-iconset-svg\demo\index.html" />
+    <Content Include="bower_components\iron-iconset-svg\demo\svg-sample-icons.html" />
+    <Content Include="bower_components\iron-iconset-svg\index.html" />
+    <Content Include="bower_components\iron-iconset-svg\iron-iconset-svg.html" />
+    <Content Include="bower_components\iron-iconset-svg\test\index.html" />
+    <Content Include="bower_components\iron-iconset-svg\test\iron-iconset-svg.html" />
+    <Content Include="bower_components\iron-icons\.gitignore" />
+    <Content Include="bower_components\iron-icons\av-icons.html" />
+    <Content Include="bower_components\iron-icons\communication-icons.html" />
+    <Content Include="bower_components\iron-icons\demo\index.html" />
+    <Content Include="bower_components\iron-icons\device-icons.html" />
+    <Content Include="bower_components\iron-icons\editor-icons.html" />
+    <Content Include="bower_components\iron-icons\hardware-icons.html" />
+    <Content Include="bower_components\iron-icons\hero.svg" />
+    <Content Include="bower_components\iron-icons\image-icons.html" />
+    <Content Include="bower_components\iron-icons\index.html" />
+    <Content Include="bower_components\iron-icons\iron-icons.html" />
+    <Content Include="bower_components\iron-icons\maps-icons.html" />
+    <Content Include="bower_components\iron-icons\notification-icons.html" />
+    <Content Include="bower_components\iron-icons\places-icons.html" />
+    <Content Include="bower_components\iron-icons\social-icons.html" />
+    <Content Include="bower_components\iron-icon\.gitignore" />
+    <Content Include="bower_components\iron-icon\demo\async.html" />
+    <Content Include="bower_components\iron-icon\demo\index.html" />
+    <Content Include="bower_components\iron-icon\demo\location.png" />
+    <Content Include="bower_components\iron-icon\hero.svg" />
+    <Content Include="bower_components\iron-icon\index.html" />
+    <Content Include="bower_components\iron-icon\iron-icon.html" />
+    <Content Include="bower_components\iron-icon\test\index.html" />
+    <Content Include="bower_components\iron-icon\test\iron-icon.html" />
+    <Content Include="bower_components\iron-image\.gitignore" />
+    <Content Include="bower_components\iron-image\demo\index.html" />
+    <Content Include="bower_components\iron-image\demo\loading.png" />
+    <Content Include="bower_components\iron-image\demo\polymer.svg" />
+    <Content Include="bower_components\iron-image\index.html" />
+    <Content Include="bower_components\iron-image\iron-image.html" />
+    <Content Include="bower_components\iron-image\test\index.html" />
+    <Content Include="bower_components\iron-image\test\iron-image.html" />
+    <Content Include="bower_components\iron-input\.gitignore" />
+    <Content Include="bower_components\iron-input\demo\index.html" />
+    <Content Include="bower_components\iron-input\hero.svg" />
+    <Content Include="bower_components\iron-input\index.html" />
+    <Content Include="bower_components\iron-input\iron-input.html" />
+    <Content Include="bower_components\iron-input\test\disabled-input.html" />
+    <Content Include="bower_components\iron-input\test\index.html" />
+    <Content Include="bower_components\iron-input\test\iron-input.html" />
+    <Content Include="bower_components\iron-input\test\letters-only.html" />
+    <Content Include="bower_components\iron-media-query\.gitignore" />
+    <Content Include="bower_components\iron-media-query\demo\index.html" />
+    <Content Include="bower_components\iron-media-query\hero.svg" />
+    <Content Include="bower_components\iron-media-query\index.html" />
+    <Content Include="bower_components\iron-media-query\iron-media-query.html" />
+    <Content Include="bower_components\iron-media-query\test\basic.html" />
+    <Content Include="bower_components\iron-media-query\test\index.html" />
+    <Content Include="bower_components\iron-menu-behavior\.gitignore" />
+    <Content Include="bower_components\iron-menu-behavior\demo\index.html" />
+    <Content Include="bower_components\iron-menu-behavior\demo\simple-menu.html" />
+    <Content Include="bower_components\iron-menu-behavior\demo\simple-menubar.html" />
+    <Content Include="bower_components\iron-menu-behavior\index.html" />
+    <Content Include="bower_components\iron-menu-behavior\iron-menu-behavior.html" />
+    <Content Include="bower_components\iron-menu-behavior\iron-menubar-behavior.html" />
+    <Content Include="bower_components\iron-menu-behavior\test\index.html" />
+    <Content Include="bower_components\iron-menu-behavior\test\iron-menu-behavior.html" />
+    <Content Include="bower_components\iron-menu-behavior\test\iron-menubar-behavior.html" />
+    <Content Include="bower_components\iron-menu-behavior\test\test-menu.html" />
+    <Content Include="bower_components\iron-menu-behavior\test\test-menubar.html" />
+    <Content Include="bower_components\iron-menu-behavior\test\test-nested-menu.html" />
+    <Content Include="bower_components\iron-meta\.gitignore" />
+    <Content Include="bower_components\iron-meta\demo\index.html" />
+    <Content Include="bower_components\iron-meta\hero.svg" />
+    <Content Include="bower_components\iron-meta\index.html" />
+    <Content Include="bower_components\iron-meta\iron-meta.html" />
+    <Content Include="bower_components\iron-meta\test\basic.html" />
+    <Content Include="bower_components\iron-meta\test\index.html" />
+    <Content Include="bower_components\iron-meta\test\iron-meta.html" />
+    <Content Include="bower_components\iron-overlay-behavior\.gitignore" />
+    <Content Include="bower_components\iron-overlay-behavior\demo\index.html" />
+    <Content Include="bower_components\iron-overlay-behavior\demo\simple-overlay.html" />
+    <Content Include="bower_components\iron-overlay-behavior\index.html" />
+    <Content Include="bower_components\iron-overlay-behavior\iron-focusables-helper.html" />
+    <Content Include="bower_components\iron-overlay-behavior\iron-overlay-backdrop.html" />
+    <Content Include="bower_components\iron-overlay-behavior\iron-overlay-behavior.html" />
+    <Content Include="bower_components\iron-overlay-behavior\iron-overlay-manager.html" />
+    <Content Include="bower_components\iron-overlay-behavior\test\index.html" />
+    <Content Include="bower_components\iron-overlay-behavior\test\iron-focusables-helper.html" />
+    <Content Include="bower_components\iron-overlay-behavior\test\iron-overlay-backdrop.html" />
+    <Content Include="bower_components\iron-overlay-behavior\test\iron-overlay-behavior.html" />
+    <Content Include="bower_components\iron-overlay-behavior\test\test-buttons-wrapper.html" />
+    <Content Include="bower_components\iron-overlay-behavior\test\test-buttons.html" />
+    <Content Include="bower_components\iron-overlay-behavior\test\test-menu-button.html" />
+    <Content Include="bower_components\iron-overlay-behavior\test\test-overlay.html" />
+    <Content Include="bower_components\iron-overlay-behavior\test\test-overlay2.html" />
+    <Content Include="bower_components\iron-resizable-behavior\.gitignore" />
+    <Content Include="bower_components\iron-resizable-behavior\demo\index.html" />
+    <Content Include="bower_components\iron-resizable-behavior\demo\src\x-app.html" />
+    <Content Include="bower_components\iron-resizable-behavior\index.html" />
+    <Content Include="bower_components\iron-resizable-behavior\iron-resizable-behavior.html" />
+    <Content Include="bower_components\iron-resizable-behavior\test\basic.html" />
+    <Content Include="bower_components\iron-resizable-behavior\test\index.html" />
+    <Content Include="bower_components\iron-resizable-behavior\test\iron-resizable-behavior.html" />
+    <Content Include="bower_components\iron-resizable-behavior\test\test-elements.html" />
+    <Content Include="bower_components\iron-selector\.gitignore" />
+    <Content Include="bower_components\iron-selector\demo\index.html" />
+    <Content Include="bower_components\iron-selector\index.html" />
+    <Content Include="bower_components\iron-selector\iron-multi-selectable.html" />
+    <Content Include="bower_components\iron-selector\iron-selectable.html" />
+    <Content Include="bower_components\iron-selector\iron-selection.html" />
+    <Content Include="bower_components\iron-selector\iron-selector.html" />
+    <Content Include="bower_components\iron-selector\test\activate-event.html" />
+    <Content Include="bower_components\iron-selector\test\attr-for-selected-elements.html" />
+    <Content Include="bower_components\iron-selector\test\attr-for-selected.html" />
+    <Content Include="bower_components\iron-selector\test\basic.html" />
+    <Content Include="bower_components\iron-selector\test\content-element.html" />
+    <Content Include="bower_components\iron-selector\test\content.html" />
+    <Content Include="bower_components\iron-selector\test\excluded-local-names.html" />
+    <Content Include="bower_components\iron-selector\test\index.html" />
+    <Content Include="bower_components\iron-selector\test\multi.html" />
+    <Content Include="bower_components\iron-selector\test\next-previous.html" />
+    <Content Include="bower_components\iron-selector\test\numeric-ids.html" />
+    <Content Include="bower_components\iron-selector\test\selected-attribute.html" />
+    <Content Include="bower_components\iron-selector\test\template-repeat.html" />
+    <Content Include="bower_components\iron-validatable-behavior\.gitignore" />
+    <Content Include="bower_components\iron-validatable-behavior\demo\cats-only.html" />
+    <Content Include="bower_components\iron-validatable-behavior\demo\index.html" />
+    <Content Include="bower_components\iron-validatable-behavior\demo\validatable-input.html" />
+    <Content Include="bower_components\iron-validatable-behavior\index.html" />
+    <Content Include="bower_components\iron-validatable-behavior\iron-validatable-behavior.html" />
+    <Content Include="bower_components\iron-validatable-behavior\test\cats-only.html" />
+    <Content Include="bower_components\iron-validatable-behavior\test\dogs-only.html" />
+    <Content Include="bower_components\iron-validatable-behavior\test\index.html" />
+    <Content Include="bower_components\iron-validatable-behavior\test\iron-validatable-behavior.html" />
+    <Content Include="bower_components\iron-validatable-behavior\test\test-validatable.html" />
+    <Content Include="bower_components\neon-animation\.gitignore" />
+    <Content Include="bower_components\neon-animation\animations\cascaded-animation.html" />
+    <Content Include="bower_components\neon-animation\animations\fade-in-animation.html" />
+    <Content Include="bower_components\neon-animation\animations\fade-out-animation.html" />
+    <Content Include="bower_components\neon-animation\animations\hero-animation.html" />
+    <Content Include="bower_components\neon-animation\animations\opaque-animation.html" />
+    <Content Include="bower_components\neon-animation\animations\reverse-ripple-animation.html" />
+    <Content Include="bower_components\neon-animation\animations\ripple-animation.html" />
+    <Content Include="bower_components\neon-animation\animations\scale-down-animation.html" />
+    <Content Include="bower_components\neon-animation\animations\scale-up-animation.html" />
+    <Content Include="bower_components\neon-animation\animations\slide-down-animation.html" />
+    <Content Include="bower_components\neon-animation\animations\slide-from-bottom-animation.html" />
+    <Content Include="bower_components\neon-animation\animations\slide-from-left-animation.html" />
+    <Content Include="bower_components\neon-animation\animations\slide-from-right-animation.html" />
+    <Content Include="bower_components\neon-animation\animations\slide-from-top-animation.html" />
+    <Content Include="bower_components\neon-animation\animations\slide-left-animation.html" />
+    <Content Include="bower_components\neon-animation\animations\slide-right-animation.html" />
+    <Content Include="bower_components\neon-animation\animations\slide-up-animation.html" />
+    <Content Include="bower_components\neon-animation\animations\transform-animation.html" />
+    <Content Include="bower_components\neon-animation\demo\card\index.html" />
+    <Content Include="bower_components\neon-animation\demo\card\x-card.html" />
+    <Content Include="bower_components\neon-animation\demo\card\x-cards-list.html" />
+    <Content Include="bower_components\neon-animation\demo\declarative\index.html" />
+    <Content Include="bower_components\neon-animation\demo\doc\index.html" />
+    <Content Include="bower_components\neon-animation\demo\doc\my-animatable.html" />
+    <Content Include="bower_components\neon-animation\demo\doc\my-dialog.html" />
+    <Content Include="bower_components\neon-animation\demo\dropdown\animated-dropdown.html" />
+    <Content Include="bower_components\neon-animation\demo\dropdown\index.html" />
+    <Content Include="bower_components\neon-animation\demo\grid\animated-grid.html" />
+    <Content Include="bower_components\neon-animation\demo\grid\fullsize-page-with-card.html" />
+    <Content Include="bower_components\neon-animation\demo\grid\index.html" />
+    <Content Include="bower_components\neon-animation\demo\index.html" />
+    <Content Include="bower_components\neon-animation\demo\list\full-view.html" />
+    <Content Include="bower_components\neon-animation\demo\list\index.html" />
+    <Content Include="bower_components\neon-animation\demo\list\list-demo.html" />
+    <Content Include="bower_components\neon-animation\demo\list\list-view.html" />
+    <Content Include="bower_components\neon-animation\demo\load\animated-grid.html" />
+    <Content Include="bower_components\neon-animation\demo\load\full-page.html" />
+    <Content Include="bower_components\neon-animation\demo\load\index.html" />
+    <Content Include="bower_components\neon-animation\demo\reprojection\animated-grid.html" />
+    <Content Include="bower_components\neon-animation\demo\reprojection\fullsize-page-with-card.html" />
+    <Content Include="bower_components\neon-animation\demo\reprojection\index.html" />
+    <Content Include="bower_components\neon-animation\demo\reprojection\reprojected-pages.html" />
+    <Content Include="bower_components\neon-animation\demo\shared-styles.html" />
+    <Content Include="bower_components\neon-animation\demo\tiles\circles-page.html" />
+    <Content Include="bower_components\neon-animation\demo\tiles\index.html" />
+    <Content Include="bower_components\neon-animation\demo\tiles\squares-page.html" />
+    <Content Include="bower_components\neon-animation\index.html" />
+    <Content Include="bower_components\neon-animation\neon-animatable-behavior.html" />
+    <Content Include="bower_components\neon-animation\neon-animatable.html" />
+    <Content Include="bower_components\neon-animation\neon-animated-pages.html" />
+    <Content Include="bower_components\neon-animation\neon-animation-behavior.html" />
+    <Content Include="bower_components\neon-animation\neon-animation-runner-behavior.html" />
+    <Content Include="bower_components\neon-animation\neon-animation.html" />
+    <Content Include="bower_components\neon-animation\neon-animations.html" />
+    <Content Include="bower_components\neon-animation\neon-shared-element-animatable-behavior.html" />
+    <Content Include="bower_components\neon-animation\neon-shared-element-animation-behavior.html" />
+    <Content Include="bower_components\neon-animation\test\index.html" />
+    <Content Include="bower_components\neon-animation\test\neon-animated-pages-descendant-selection.html" />
+    <Content Include="bower_components\neon-animation\test\neon-animated-pages-lazy.html" />
+    <Content Include="bower_components\neon-animation\test\neon-animated-pages.html" />
+    <Content Include="bower_components\neon-animation\test\test-resizable-pages.html" />
+    <Content Include="bower_components\neon-animation\web-animations.html" />
+    <Content Include="bower_components\paper-behaviors\.gitignore" />
+    <Content Include="bower_components\paper-behaviors\demo\index.html" />
+    <Content Include="bower_components\paper-behaviors\demo\paper-button.html" />
+    <Content Include="bower_components\paper-behaviors\demo\paper-radio-button.html" />
+    <Content Include="bower_components\paper-behaviors\index.html" />
+    <Content Include="bower_components\paper-behaviors\paper-button-behavior.html" />
+    <Content Include="bower_components\paper-behaviors\paper-checked-element-behavior.html" />
+    <Content Include="bower_components\paper-behaviors\paper-inky-focus-behavior.html" />
+    <Content Include="bower_components\paper-behaviors\paper-ripple-behavior.html" />
+    <Content Include="bower_components\paper-behaviors\test\index.html" />
+    <Content Include="bower_components\paper-behaviors\test\paper-button-behavior.html" />
+    <Content Include="bower_components\paper-behaviors\test\paper-checked-element-behavior.html" />
+    <Content Include="bower_components\paper-behaviors\test\paper-radio-button-behavior.html" />
+    <Content Include="bower_components\paper-behaviors\test\paper-ripple-behavior.html" />
+    <Content Include="bower_components\paper-behaviors\test\shadowed-ripple.html" />
+    <Content Include="bower_components\paper-behaviors\test\test-button.html" />
+    <Content Include="bower_components\paper-behaviors\test\test-radio-button.html" />
+    <Content Include="bower_components\paper-button\.gitignore" />
+    <Content Include="bower_components\paper-button\demo\index.html" />
+    <Content Include="bower_components\paper-button\index.html" />
+    <Content Include="bower_components\paper-button\paper-button.html" />
+    <Content Include="bower_components\paper-button\test\index.html" />
+    <Content Include="bower_components\paper-button\test\paper-button.html" />
+    <Content Include="bower_components\paper-card\.gitignore" />
+    <Content Include="bower_components\paper-card\demo\cafe.png" />
+    <Content Include="bower_components\paper-card\demo\donuts.png" />
+    <Content Include="bower_components\paper-card\demo\house.png" />
+    <Content Include="bower_components\paper-card\demo\index.html" />
+    <Content Include="bower_components\paper-card\demo\travel.png" />
+    <Content Include="bower_components\paper-card\demo\trip.png" />
+    <Content Include="bower_components\paper-card\index.html" />
+    <Content Include="bower_components\paper-card\paper-card.html" />
+    <Content Include="bower_components\paper-card\test\basic.html" />
+    <Content Include="bower_components\paper-card\test\index.html" />
+    <Content Include="bower_components\paper-dialog-behavior\.gitignore" />
+    <Content Include="bower_components\paper-dialog-behavior\demo\index.html" />
+    <Content Include="bower_components\paper-dialog-behavior\demo\simple-dialog.html" />
+    <Content Include="bower_components\paper-dialog-behavior\hero.svg" />
+    <Content Include="bower_components\paper-dialog-behavior\index.html" />
+    <Content Include="bower_components\paper-dialog-behavior\paper-dialog-behavior.html" />
+    <Content Include="bower_components\paper-dialog-behavior\paper-dialog-common.css" />
+    <Content Include="bower_components\paper-dialog-behavior\paper-dialog-shared-styles.html" />
+    <Content Include="bower_components\paper-dialog-behavior\test\index.html" />
+    <Content Include="bower_components\paper-dialog-behavior\test\paper-dialog-behavior.html" />
+    <Content Include="bower_components\paper-dialog-behavior\test\test-buttons.html" />
+    <Content Include="bower_components\paper-dialog-behavior\test\test-dialog.html" />
+    <Content Include="bower_components\paper-dialog\.gitignore" />
+    <Content Include="bower_components\paper-dialog\demo\index.html" />
+    <Content Include="bower_components\paper-dialog\hero.svg" />
+    <Content Include="bower_components\paper-dialog\index.html" />
+    <Content Include="bower_components\paper-dialog\paper-dialog.html" />
+    <Content Include="bower_components\paper-dialog\test\index.html" />
+    <Content Include="bower_components\paper-dialog\test\paper-dialog.html" />
+    <Content Include="bower_components\paper-drawer-panel\.gitignore" />
+    <Content Include="bower_components\paper-drawer-panel\demo\index.html" />
+    <Content Include="bower_components\paper-drawer-panel\hero.svg" />
+    <Content Include="bower_components\paper-drawer-panel\index.html" />
+    <Content Include="bower_components\paper-drawer-panel\paper-drawer-panel.html" />
+    <Content Include="bower_components\paper-drawer-panel\test\focus.html" />
+    <Content Include="bower_components\paper-drawer-panel\test\index.html" />
+    <Content Include="bower_components\paper-drawer-panel\test\positioning.html" />
+    <Content Include="bower_components\paper-drawer-panel\test\small-devices.html" />
+    <Content Include="bower_components\paper-header-panel\.gitignore" />
+    <Content Include="bower_components\paper-header-panel\demo\index.html" />
+    <Content Include="bower_components\paper-header-panel\hero.svg" />
+    <Content Include="bower_components\paper-header-panel\index.html" />
+    <Content Include="bower_components\paper-header-panel\paper-header-panel.html" />
+    <Content Include="bower_components\paper-header-panel\test\basic.html" />
+    <Content Include="bower_components\paper-header-panel\test\index.html" />
+    <Content Include="bower_components\paper-icon-button\.gitignore" />
+    <Content Include="bower_components\paper-icon-button\demo\index.html" />
+    <Content Include="bower_components\paper-icon-button\demo\paper-icon-button-light.html" />
+    <Content Include="bower_components\paper-icon-button\index.html" />
+    <Content Include="bower_components\paper-icon-button\paper-icon-button-light.html" />
+    <Content Include="bower_components\paper-icon-button\paper-icon-button.html" />
+    <Content Include="bower_components\paper-icon-button\test\a11y.html" />
+    <Content Include="bower_components\paper-icon-button\test\basic.html" />
+    <Content Include="bower_components\paper-icon-button\test\index.html" />
+    <Content Include="bower_components\paper-input\.gitignore" />
+    <Content Include="bower_components\paper-input\all-imports.html" />
+    <Content Include="bower_components\paper-input\demo\index.html" />
+    <Content Include="bower_components\paper-input\demo\ssn-input.html" />
+    <Content Include="bower_components\paper-input\demo\ssn-validator.html" />
+    <Content Include="bower_components\paper-input\hero.svg" />
+    <Content Include="bower_components\paper-input\index.html" />
+    <Content Include="bower_components\paper-input\paper-input-addon-behavior.html" />
+    <Content Include="bower_components\paper-input\paper-input-behavior.html" />
+    <Content Include="bower_components\paper-input\paper-input-char-counter.html" />
+    <Content Include="bower_components\paper-input\paper-input-container.html" />
+    <Content Include="bower_components\paper-input\paper-input-error.html" />
+    <Content Include="bower_components\paper-input\paper-input.html" />
+    <Content Include="bower_components\paper-input\paper-textarea.html" />
+    <Content Include="bower_components\paper-input\test\index.html" />
+    <Content Include="bower_components\paper-input\test\letters-only.html" />
+    <Content Include="bower_components\paper-input\test\paper-input-char-counter.html" />
+    <Content Include="bower_components\paper-input\test\paper-input-container.html" />
+    <Content Include="bower_components\paper-input\test\paper-input-error.html" />
+    <Content Include="bower_components\paper-input\test\paper-input.html" />
+    <Content Include="bower_components\paper-input\test\paper-textarea.html" />
+    <Content Include="bower_components\paper-item\.gitignore" />
+    <Content Include="bower_components\paper-item\all-imports.html" />
+    <Content Include="bower_components\paper-item\demo\index.html" />
+    <Content Include="bower_components\paper-item\index.html" />
+    <Content Include="bower_components\paper-item\paper-icon-item.html" />
+    <Content Include="bower_components\paper-item\paper-item-behavior.html" />
+    <Content Include="bower_components\paper-item\paper-item-body.html" />
+    <Content Include="bower_components\paper-item\paper-item-shared-styles.html" />
+    <Content Include="bower_components\paper-item\paper-item.html" />
+    <Content Include="bower_components\paper-item\test\index.html" />
+    <Content Include="bower_components\paper-item\test\paper-item.html" />
+    <Content Include="bower_components\paper-material\.gitignore" />
+    <Content Include="bower_components\paper-material\demo\index.html" />
+    <Content Include="bower_components\paper-material\index.html" />
+    <Content Include="bower_components\paper-material\paper-material-shared-styles.html" />
+    <Content Include="bower_components\paper-material\paper-material.html" />
+    <Content Include="bower_components\paper-material\test\index.html" />
+    <Content Include="bower_components\paper-material\test\paper-material.html" />
+    <Content Include="bower_components\paper-menu\.gitignore" />
+    <Content Include="bower_components\paper-menu\demo\index.html" />
+    <Content Include="bower_components\paper-menu\hero.svg" />
+    <Content Include="bower_components\paper-menu\index.html" />
+    <Content Include="bower_components\paper-menu\paper-menu-shared-styles.html" />
+    <Content Include="bower_components\paper-menu\paper-menu.html" />
+    <Content Include="bower_components\paper-menu\paper-submenu.html" />
+    <Content Include="bower_components\paper-menu\test\index.html" />
+    <Content Include="bower_components\paper-menu\test\paper-menu.html" />
+    <Content Include="bower_components\paper-menu\test\paper-submenu.html" />
+    <Content Include="bower_components\paper-ripple\.gitignore" />
+    <Content Include="bower_components\paper-ripple\demo\index.html" />
+    <Content Include="bower_components\paper-ripple\hero.svg" />
+    <Content Include="bower_components\paper-ripple\index.html" />
+    <Content Include="bower_components\paper-ripple\paper-ripple.html" />
+    <Content Include="bower_components\paper-ripple\test\index.html" />
+    <Content Include="bower_components\paper-ripple\test\paper-ripple.html" />
+    <Content Include="bower_components\paper-styles\classes\global.html" />
+    <Content Include="bower_components\paper-styles\classes\shadow-layout.html" />
+    <Content Include="bower_components\paper-styles\classes\shadow.html" />
+    <Content Include="bower_components\paper-styles\classes\typography.html" />
+    <Content Include="bower_components\paper-styles\color.html" />
+    <Content Include="bower_components\paper-styles\default-theme.html" />
+    <Content Include="bower_components\paper-styles\demo-pages.html" />
+    <Content Include="bower_components\paper-styles\demo.css" />
+    <Content Include="bower_components\paper-styles\demo\index.html" />
+    <Content Include="bower_components\paper-styles\index.html" />
+    <Content Include="bower_components\paper-styles\paper-styles-classes.html" />
+    <Content Include="bower_components\paper-styles\paper-styles.html" />
+    <Content Include="bower_components\paper-styles\shadow.html" />
+    <Content Include="bower_components\paper-styles\typography.html" />
+    <Content Include="bower_components\paper-toolbar\.gitignore" />
+    <Content Include="bower_components\paper-toolbar\demo\index.html" />
+    <Content Include="bower_components\paper-toolbar\index.html" />
+    <Content Include="bower_components\paper-toolbar\paper-toolbar.html" />
+    <Content Include="bower_components\paper-toolbar\test\index.html" />
+    <Content Include="bower_components\paper-toolbar\test\paper-toolbar.html" />
+    <Content Include="bower_components\pl-components\pl-expansion-panel.css" />
+    <Content Include="bower_components\pl-components\pl-expansion-panel.html" />
+    <Content Include="bower_components\pl-components\pl-router.html" />
+    <Content Include="bower_components\polymer\LICENSE.txt" />
+    <Content Include="bower_components\polymer\polymer-micro.html" />
+    <Content Include="bower_components\polymer\polymer-mini.html" />
+    <Content Include="bower_components\polymer\polymer.html" />
+    <Content Include="bower_components\promise-polyfill\Gruntfile.js" />
+    <Content Include="bower_components\promise-polyfill\promise-polyfill-lite.html" />
+    <Content Include="bower_components\promise-polyfill\promise-polyfill.html" />
+    <Content Include="bower_components\promise-polyfill\Promise-Statics.js" />
+    <Content Include="bower_components\promise-polyfill\Promise.js" />
+    <Content Include="bower_components\promise-polyfill\Promise.min.js" />
+    <Content Include="bower_components\web-animations-js\web-animations-next-lite.min.js" />
+    <Content Include="bower_components\web-animations-js\web-animations-next.min.js" />
+    <Content Include="bower_components\web-animations-js\web-animations.html" />
+    <Content Include="bower_components\web-animations-js\web-animations.min.js" />
+    <Content Include="bower_components\webcomponentsjs\CustomElements.js" />
+    <Content Include="bower_components\webcomponentsjs\CustomElements.min.js" />
+    <Content Include="bower_components\webcomponentsjs\HTMLImports.js" />
+    <Content Include="bower_components\webcomponentsjs\HTMLImports.min.js" />
+    <Content Include="bower_components\webcomponentsjs\MutationObserver.js" />
+    <Content Include="bower_components\webcomponentsjs\MutationObserver.min.js" />
+    <Content Include="bower_components\webcomponentsjs\ShadowDOM.js" />
+    <Content Include="bower_components\webcomponentsjs\ShadowDOM.min.js" />
+    <Content Include="bower_components\webcomponentsjs\webcomponents-lite.js" />
+    <Content Include="bower_components\webcomponentsjs\webcomponents-lite.min.js" />
+    <Content Include="bower_components\webcomponentsjs\webcomponents.js" />
+    <Content Include="bower_components\webcomponentsjs\webcomponents.min.js" />
+    <Content Include="components\layout.html" />
+    <Content Include="grid.css" />
+    <Content Include="scripts\ai.0.22.9-build00167.js" />
+    <Content Include="scripts\ai.0.22.9-build00167.min.js" />
+    <Content Include="Index.html" />
+    <Content Include="components\ch-chat.html" />
+    <Content Include="views\index.html" />
+    <Content Include="views\mensagens.html" />
+    <Content Include="Web.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Api\BaseController.cs" />
+    <Compile Include="Api\Hubs\ChatHub.cs" />
+    <Compile Include="Api\Hubs\SignalRContractResolver.cs" />
+    <Compile Include="Api\Models\Menssagem.cs" />
+    <Compile Include="Api\Models\Usuario.cs" />
+    <Compile Include="Api\Repositorios\EF\DBContext.cs" />
+    <Compile Include="Api\Repositorios\EF\UsuarioRepositorio.cs" />
+    <Compile Include="Api\Repositorios\IUsuarioRepositorio.cs" />
+    <Compile Include="Api\Repositorios\LocalizadorDeRepozitorios.cs" />
+    <Compile Include="Api\Repositorios\Memoria\UsuarioRepositorio.cs" />
+    <Compile Include="Api\MenssagensController.cs" />
+    <Compile Include="Api\UsuariosController.cs" />
+    <Compile Include="Migrations\201611131456098_Usuario.cs" />
+    <Compile Include="Migrations\201611131456098_Usuario.Designer.cs">
+      <DependentUpon>201611131456098_Usuario.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201611131511050_Usuario-signlr.cs" />
+    <Compile Include="Migrations\201611131511050_Usuario-signlr.Designer.cs">
+      <DependentUpon>201611131511050_Usuario-signlr.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201611132148235_Menssagem.cs" />
+    <Compile Include="Migrations\201611132148235_Menssagem.Designer.cs">
+      <DependentUpon>201611132148235_Menssagem.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Startup.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <TypeScriptCompile Include="scripts\location.ts" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201611131456098_Usuario.resx">
+      <DependentUpon>201611131456098_Usuario.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201611131511050_Usuario-signlr.resx">
+      <DependentUpon>201611131511050_Usuario-signlr.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201611132148235_Menssagem.resx">
+      <DependentUpon>201611132148235_Menssagem.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets')" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>True</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>21129</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\Microsoft.Net.Compilers.1.0.0\build\Microsoft.Net.Compilers.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Net.Compilers.1.0.0\build\Microsoft.Net.Compilers.props'))" />
+    <Error Condition="!Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props'))" />
+  </Target>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
