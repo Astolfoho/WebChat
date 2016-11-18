@@ -8,6 +8,8 @@ using Newtonsoft.Json.Serialization;
 using Newtonsoft.Json;
 using Microsoft.AspNet.SignalR;
 using Chat.Api.Hubs;
+using Microsoft.AspNet.SignalR.Messaging;
+using Chat.Scaleout;
 
 [assembly: OwinStartup(typeof(Chat.Startup))]
 
@@ -30,6 +32,7 @@ namespace Chat
             settings.ContractResolver = new SignalRContractResolver();
             var serializer = JsonSerializer.Create(settings);
             GlobalHost.DependencyResolver.Register(typeof(JsonSerializer), () => serializer);
+          //  GlobalHost.DependencyResolver.UseRBus(new ScaleoutConfiguration() { MaxQueueLength = 30 });
         }
 
         private void ConfigureApi(HttpConfiguration config)

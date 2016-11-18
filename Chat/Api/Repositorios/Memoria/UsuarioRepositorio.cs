@@ -10,20 +10,14 @@ namespace Chat.Api.Repositorios.Memoria
     public class UsuarioRepositorio : IUsuarioRepositorio
     {
         private static List<Usuario> _rep;
+        private static List<Menssagem> _repMsg;
 
         private static object _sync = new object();
 
         static UsuarioRepositorio()
         {
-            _rep = new List<Usuario>
-            {
-                new Usuario
-                {
-                    Id = 1,
-                    Nome = "teste",
-                    EstaOnline = false
-                }
-            };
+            _rep = new List<Usuario>();
+            _repMsg = new List<Menssagem>();
         }
 
 
@@ -66,22 +60,30 @@ namespace Chat.Api.Repositorios.Memoria
                 return usuario;
             }
             usr.EstaOnline = usuario.EstaOnline;
+            usr.SignalrId = usuario.SignalrId;
             return usuario;
         }
 
         public Usuario PegarPorNome(string nome)
         {
-            throw new NotImplementedException();
+            return _rep.FirstOrDefault(f => f.Nome.Equals(nome, StringComparison.InvariantCultureIgnoreCase));
         }
 
         public IEnumerable<Menssagem> PegarMenssagens(int us1, int us2)
         {
-            throw new NotImplementedException();
+            var ms1 = _repMsg.Where(w => w.Para == us1 && w.De == us2 || w.Para == us2 && w.De == us1).OrderByDescending(o => o.SendDateTime);
+            var usrs = this.PegarTodos();
+            ms1.ToList().ForEach(f =>
+            {
+                f.NomeUsuarioDe = usrs.First(f2 => f2.Id == f.De).Nome;
+                f.SouEu = f.De == us1;
+            });
+            return ms1;
         }
 
         public void AdicionarMenssagem(Menssagem msg)
         {
-            throw new NotImplementedException();
+            _repMsg.Add(msg);
         }
     }
 }

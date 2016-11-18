@@ -11,22 +11,31 @@
 <link rel="import" href="../../bower_components/paper-input/paper-input.html" />
 <link rel="import" href="../../bower_components/paper-button/paper-button.html" />
 <link rel="import" href="./ch-chat-message.html" />
+<link rel="import" href="./ch-emoji-btn.html" />
 
 <dom-module id="ch-chat">
     <template>
         <style>
             #menssagens {
                 padding: 10px;
+                overflow-y:auto;
+            }
+
+            :host{
+                display:flex;
+                flex-direction:column;
+                flex:1 1 100%;
             }
         </style>
         <iron-ajax id="ajaxMenssagens" url="/api/Menssagens" method="GET" handle-as="json" last-response="{{menssagens}}" content-type="application/json"></iron-ajax>
-        <div id="menssagens" class="flex column-reverse">
+        <div id="menssagens" on-tap="_closeEmojis" class="flex column-reverse msg-panel">
             <template is="dom-repeat" items="{{menssagens}}">
-                <ch-chat-message text="{{item.conteudo}}" nome-usuario="{{item.nomeUsuarioDe}}">
+                <ch-chat-message text="{{item.conteudo}}" nome-usuario="{{item.nomeUsuarioDe}}" me="{{_souEu(item.de)}}">
                 </ch-chat-message>
             </template>
         </div>
-        <paper-input label="Messagem" value="{{menssagem::input}}" style="background-color:#fff;">
+        <paper-input inputmode="latin-prose" placeholder="Mensagem" value="{{menssagem::input}}" style="background-color:#fff;" on-keydown="_enviarMensagemKp">
+            <ch-emoji-btn id="btnEmojis" on-emoji-selected="_addEmoji" prefix ></ch-emoji-btn>
             <paper-icon-button icon="send" on-tap="_enviarMensagem" suffix></paper-icon-button>
         </paper-input>
     </template>
@@ -35,25 +44,35 @@
 
         Polymer({
             is: "ch-chat",
-            ready: function () {
-                this.classList.add("column");
-                window.menssagemRecebida = function (msg) {
-                    var mes = document.createElement("ch-chat-message");
-                    mes.text = msg.conteudo;
-                    mes.me = false;
-                    mes.nomeUsuario = msg.nomeUsuarioDe;
-                    this.$.menssagens.insertBefore(mes, this.$.menssagens.firstChild);
-                }.bind(this);
+            properties:{
+                selectedId: Number
+            },
+            attached: function () {
+                this.menssagem = ""
+                try {
+                    window.menssagemRecebida = function (msg) {
+                        var mes = document.createElement("ch-chat-message");
+                        mes.text = msg.conteudo;
+                        mes.me = false;
+                        mes.nomeUsuario = msg.nomeUsuarioDe;
+                        this.$.menssagens.insertBefore(mes, this.$.menssagens.firstChild);
+                    }.bind(this);
 
-                this.$.ajaxMenssagens.params = {};
-                this.$.ajaxMenssagens.params.eu = window.usuario.id;
-                this.$.ajaxMenssagens.params.outro = +window.location.hashQuery["userId"];
-                this.$.ajaxMenssagens.generateRequest();
+                    this.$.ajaxMenssagens.params = {};
+                    this.$.ajaxMenssagens.params.eu = window.usuario.id;
+                    this.$.ajaxMenssagens.params.outro = this.selectedId;
+                    this.$.ajaxMenssagens.generateRequest();
 
-                
+                } catch (e) {
+
+                }
 
             },
-            _enviarMensagem : function() {
+            _enviarMensagem: function () {
+                if (this.menssagem.trim() === "") {
+                    return;
+                }
+
                 var mes = document.createElement("ch-chat-message");
                 mes.text = this.menssagem;
                 mes.me = true;
@@ -63,15 +82,35 @@
 
                 var messagem = {};
                 messagem.de = window.usuario.id;
-                messagem.para = +window.location.hashQuery["userId"];
+                messagem.para = this.selectedId;
                 messagem.conteudo = this.menssagem;
                 messagem.nomeUsuarioDe = window.usuario.nome;
 
-                window.chat.server.sendMessage(messagem);
+                window.chatHub.server.sendMessage(messagem);
+                this.$.btnEmojis.close();
 
-                this.mensagem = "";
+                this.menssagem = "";
                 
+            },
+            _enviarMensagemKp: function (e) {
+                // check if 'enter' was pressed
+                if (e.keyCode === 13) {
+                    // enter pressed!
+                    this._enviarMensagem();
+                }
+
+            },
+            _souEu: function (id) {
+                return window.usuario.id == id;
+            },
+            _addEmoji: function (ev) {
+                console.log(ev);
+                this.menssagem += ev.detail.emoji;
+            },
+            _closeEmojis: function () {
+                this.$.btnEmojis.close();
             }
+
         });
 
         

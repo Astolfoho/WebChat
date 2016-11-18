@@ -10,7 +10,6 @@ namespace Chat.Migrations
         public Configuration()
         {
             AutomaticMigrationsEnabled = false;
-            AutomaticMigrationDataLossAllowed = true;
         }
 
         protected override void Seed(Chat.Api.Repositorios.EF.DBContext context)

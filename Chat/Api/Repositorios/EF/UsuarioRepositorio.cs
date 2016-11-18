@@ -55,7 +55,7 @@ namespace Chat.Api.Repositorios.EF
 
         public IEnumerable<Menssagem> PegarMenssagens(int us1, int us2)
         {
-            var ms1 = this._rep.Menssagens.Where(w => w.Para == us1 && w.De == us2 || w.Para == us2 && w.De == us1).OrderBy(o => o.SendDateTime);
+            var ms1 = this._rep.Menssagens.Where(w => w.Para == us1 && w.De == us2 || w.Para == us2 && w.De == us1).OrderByDescending(o => o.SendDateTime);
             var usrs = this.PegarTodos();
             ms1.ToList().ForEach(f =>
                 {
@@ -67,6 +67,7 @@ namespace Chat.Api.Repositorios.EF
 
         public void AdicionarMenssagem(Menssagem msg)
         {
+            msg.Id = Guid.NewGuid();
             _rep.Menssagens.Add(msg);
             _rep.SaveChanges();
         }

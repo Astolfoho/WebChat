@@ -1,0 +1,121 @@
+﻿<link rel="import" href="../../bower_components/polymer/polymer.html" />
+<link rel="import" href="../../bower_components/paper-drawer-panel/paper-drawer-panel.html" />
+<link rel="import" href="../../bower_components/paper-toolbar/paper-toolbar.html" />_
+<link rel="import" href="../../bower_components/iron-icons/iron-icons.html" />_
+<link rel="import" href="../../bower_components/iron-icons/editor-icons.html" />_
+<link rel="import" href="../../bower_components/paper-icon-button/paper-icon-button.html" />_
+<link rel="import" href="../../bower_components/paper-material/paper-material.html" />_
+<link rel="import" href="../../bower_components/pl-components/pl-router.html" />_
+<link rel="import" href="../../bower_components/paper-header-panel/paper-header-panel.html" />_
+<link rel="import" href="../../bower_components/iron-ajax/iron-ajax.html" />
+<link rel="import" href="../../bower_components/paper-dialog/paper-dialog.html" />
+<link rel="import" href="../../bower_components/paper-input/paper-input.html" />
+<link rel="import" href="../../bower_components/paper-button/paper-button.html" />
+<link rel="import" href="./ch-chat-message.html" />
+
+<dom-module id="ch-emoji-btn">
+    <style>
+        :host {
+            position: relative;
+        }
+
+            :host .show-emojis {
+                display: block;
+            }
+
+            :host .hide-emojis {
+                display: none;
+            }
+
+            :host .emojis-container {
+                left:15px;
+                font-size: 25px;
+                position: absolute;
+                width: 300px;
+                height: 300px;
+                bottom: 50px;
+                background-color: white;
+                overflow-y: auto;
+                box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.75);
+            }
+
+            :host paper-button{
+                display:inline;
+            }
+
+            :host .emoji{
+                min-width:25px;
+                height:25px;
+                padding:3px;
+                display:inline-block;
+            }
+    </style>
+    <template>
+        <iron-ajax id="emojiData" auto url="/emoji.json" method="GET" handle-as="json" last-response="{{emojiData}}" on-response="_createData" content-type="application/json"></iron-ajax>
+        <paper-icon-button icon="editor:insert-emoticon" on-tap="_toogle"></paper-icon-button>
+        <div class$="emojis-container {{_emojisClass(show)}}">
+            <template is="dom-repeat" items="{{_toArray(emojis)}}">
+                <span>{{item.name}}</span>
+                <br />
+                <template is="dom-repeat" items="{{item.value}}">
+                    <div class="emoji" on-tap="_emojiTap">{{item.emoji}}</div>
+                </template>
+                <br />
+                <hr />
+            </template>
+        </div>
+    </template>
+
+    <script>
+
+        Polymer({
+            is: "ch-emoji-btn",
+            ready: function () {
+                this.show = false;
+            },
+            _createData: function (ev) {
+                var obj = {};
+
+                for (var i = 0; i < this.emojiData.length; i++) {
+                    var item = this.emojiData[i];
+                    obj[item.category] = obj[item.category] || [];
+
+                    if (parseInt(item["unicode_version"]) > 6.1) {
+                        continue;
+                    }
+
+                    obj[item.category].push(item);
+                }
+
+                console.log(obj);
+                this.emojis = obj;
+            },
+            _toArray: function (obj) {
+                return Object.keys(obj).map(function (key) {
+                    return {
+                        name: key,
+                        value: obj[key]
+                    };
+                });
+            },
+            _emojisClass: function (show) {
+                return !!show ? "show-emojis" : "hide-emojis"
+            },
+
+            _toogle: function () {
+                this.show = !this.show;
+            },
+            _emojiTap: function (ev) {
+                console.log(ev);
+                this.fire('emoji-selected', { emoji: ev.model.item.emoji });
+            },
+            close: function () {
+                this.show = false;
+            }
+        });
+
+
+
+    </script>
+
+</dom-module>
