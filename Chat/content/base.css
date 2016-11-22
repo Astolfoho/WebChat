@@ -38,7 +38,7 @@ html, body {
 }
 
 .msg-panel {
-    background-image: url('ignasi_pattern_s.png');
+    background-image: url('./ignasi_pattern_s.png');
     background-repeat: repeat;
 }
 

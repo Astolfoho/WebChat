@@ -125,7 +125,7 @@
                                     });
                                 } else {
                                     var notification = new Notification(msg.nomeUsuarioDe, {
-                                        icon: '/chat-alt-outline.png',
+                                        icon: '/content/message.png',
                                         body: msg.conteudo
                                     });
 
@@ -181,7 +181,7 @@
                     });
                 }.bind(this));
 
-                $(window).unload(function (event) {
+                window.addEventListener('unload',function (event) {
                     context.usuario.estaOnline = false;
                     context._salvarUsuario();
                 });

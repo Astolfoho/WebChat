@@ -51,7 +51,7 @@
             }
     </style>
     <template>
-        <iron-ajax id="emojiData" auto url="/emoji.json" method="GET" handle-as="json" last-response="{{emojiData}}" on-response="_createData" content-type="application/json"></iron-ajax>
+        <iron-ajax id="emojiData" auto url="/content/emoji.json" method="GET" handle-as="json" last-response="{{emojiData}}" on-response="_createData" content-type="application/json"></iron-ajax>
         <paper-icon-button icon="editor:insert-emoticon" on-tap="_toogle"></paper-icon-button>
         <div class$="emojis-container {{_emojisClass(show)}}">
             <template is="dom-repeat" items="{{_toArray(emojis)}}">
