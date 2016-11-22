@@ -4,31 +4,31 @@ using System.Linq;
 using System.Web;
 using Microsoft.AspNet.SignalR;
 using Chat.Api.Models;
-using Chat.Api.Repositorios;
+using Chat.Api.Repository;
 
 namespace Chat.Api.Hubs
 {
     public class ChatHub : Hub
     {
-        private IUsuarioRepositorio _usersRep;
+        private IUserRepository _usersRep;
 
         public ChatHub()
         {
-            _usersRep = LocalizadorDeRepozitorios.Pegar<IUsuarioRepositorio>();
+            _usersRep = RepositoryLocator.Get<IUserRepository>();
         }
 
-        public void SendMessage(Menssagem msg)
+        public void SendMessage(Message msg)
         {
-            var userPara = this._usersRep.PegarTodos().FirstOrDefault(w => w.Id == msg.Para);
+            var userTo = this._usersRep.GetAll().FirstOrDefault(w => w.Id == msg.To);
             msg.SendDateTime = DateTime.Now;
-            _usersRep.AdicionarMenssagem(msg);
-            this.Clients.Client(userPara.SignalrId).MenssagemRecebida(msg);
+            _usersRep.AddMessage(msg);
+            this.Clients.Client(userTo.SignalrId).OnMessageReceived(msg);
         }
 
-        public IEnumerable<Usuario> PegarUsuarios()
+        public IEnumerable<User> GetUsers()
         {
             
-            return _usersRep.PegarTodos();
+            return _usersRep.GetAll();
         }
         
     }

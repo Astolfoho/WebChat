@@ -27,10 +27,10 @@
                 flex:1 1 100%;
             }
         </style>
-        <iron-ajax id="ajaxMenssagens" url="/api/Menssagens" method="GET" handle-as="json" last-response="{{menssagens}}" content-type="application/json"></iron-ajax>
+        <iron-ajax id="ajaxMenssagens" url="/api/Messages" method="GET" handle-as="json" last-response="{{menssagens}}" content-type="application/json"></iron-ajax>
         <div id="menssagens" on-tap="_closeEmojis" class="flex column-reverse msg-panel">
             <template is="dom-repeat" items="{{menssagens}}">
-                <ch-chat-message text="{{item.conteudo}}" nome-usuario="{{item.nomeUsuarioDe}}" me="{{_souEu(item.de)}}">
+                <ch-chat-message text="{{item.content}}" nome-usuario="{{item.nameFrom}}" me="{{_souEu(item.from)}}">
                 </ch-chat-message>
             </template>
         </div>
@@ -50,16 +50,16 @@
             attached: function () {
                 this.menssagem = ""
                 try {
-                    window.menssagemRecebida = function (msg) {
+                    window.onMessageReceived = function (msg) {
                         var mes = document.createElement("ch-chat-message");
-                        mes.text = msg.conteudo;
+                        mes.text = msg.content;
                         mes.me = false;
-                        mes.nomeUsuario = msg.nomeUsuarioDe;
+                        mes.nomeUsuario = msg.nameFrom;
                         this.$.menssagens.insertBefore(mes, this.$.menssagens.firstChild);
                     }.bind(this);
 
                     this.$.ajaxMenssagens.params = {};
-                    this.$.ajaxMenssagens.params.eu = window.usuario.id;
+                    this.$.ajaxMenssagens.params.eu = window.user.id;
                     this.$.ajaxMenssagens.params.outro = this.selectedId;
                     this.$.ajaxMenssagens.generateRequest();
 
@@ -76,17 +76,17 @@
                 var mes = document.createElement("ch-chat-message");
                 mes.text = this.menssagem;
                 mes.me = true;
-                mes.nomeUsuario = window.usuario.nome;
+                mes.nomeUsuario = window.user.name;
 
                 this.$.menssagens.insertBefore(mes, this.$.menssagens.firstChild);
 
-                var messagem = {};
-                messagem.de = window.usuario.id;
-                messagem.para = this.selectedId;
-                messagem.conteudo = this.menssagem;
-                messagem.nomeUsuarioDe = window.usuario.nome;
+                var msg = {};
+                msg.from = window.user.id;
+                msg.to = this.selectedId;
+                msg.content = this.menssagem;
+                msg.nameFrom = window.user.name;
 
-                window.chatHub.server.sendMessage(messagem);
+                window.chatHub.server.sendMessage(msg);
                 this.$.btnEmojis.close();
 
                 this.menssagem = "";
@@ -101,7 +101,7 @@
 
             },
             _souEu: function (id) {
-                return window.usuario.id == id;
+                return window.user.id == id;
             },
             _addEmoji: function (ev) {
                 console.log(ev);

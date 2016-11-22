@@ -3,29 +3,29 @@ namespace Chat.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class first : DbMigration
+    public partial class First : DbMigration
     {
         public override void Up()
         {
             CreateTable(
-                "dbo.Menssagems",
+                "dbo.Messages",
                 c => new
                     {
                         Id = c.Guid(nullable: false),
-                        De = c.Int(nullable: false),
-                        Para = c.Int(nullable: false),
-                        Conteudo = c.String(),
+                        From = c.Int(nullable: false),
+                        To = c.Int(nullable: false),
+                        Content = c.String(),
                         SendDateTime = c.DateTime(nullable: false),
                     })
                 .PrimaryKey(t => t.Id);
             
             CreateTable(
-                "dbo.Usuarios",
+                "dbo.Users",
                 c => new
                     {
                         Id = c.Int(nullable: false, identity: true),
-                        EstaOnline = c.Boolean(nullable: false),
-                        Nome = c.String(),
+                        IsOnline = c.Boolean(nullable: false),
+                        Name = c.String(),
                         SignalrId = c.String(),
                     })
                 .PrimaryKey(t => t.Id);
@@ -34,8 +34,8 @@ namespace Chat.Migrations
         
         public override void Down()
         {
-            DropTable("dbo.Usuarios");
-            DropTable("dbo.Menssagems");
+            DropTable("dbo.Users");
+            DropTable("dbo.Messages");
         }
     }
 }

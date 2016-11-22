@@ -171,18 +171,18 @@
     <Compile Include="Api\BaseController.cs" />
     <Compile Include="Api\Hubs\ChatHub.cs" />
     <Compile Include="Api\Hubs\SignalRContractResolver.cs" />
-    <Compile Include="Api\Models\Menssagem.cs" />
-    <Compile Include="Api\Models\Usuario.cs" />
-    <Compile Include="Api\Repositorios\EF\DBContext.cs" />
-    <Compile Include="Api\Repositorios\EF\UsuarioRepositorio.cs" />
-    <Compile Include="Api\Repositorios\IUsuarioRepositorio.cs" />
-    <Compile Include="Api\Repositorios\LocalizadorDeRepozitorios.cs" />
-    <Compile Include="Api\Repositorios\Memoria\UsuarioRepositorio.cs" />
-    <Compile Include="Api\MenssagensController.cs" />
-    <Compile Include="Api\UsuariosController.cs" />
-    <Compile Include="Migrations\201611171726578_first.cs" />
-    <Compile Include="Migrations\201611171726578_first.Designer.cs">
-      <DependentUpon>201611171726578_first.cs</DependentUpon>
+    <Compile Include="Api\Models\Message.cs" />
+    <Compile Include="Api\Models\User.cs" />
+    <Compile Include="Api\Repository\EF\DBContext.cs" />
+    <Compile Include="Api\Repository\EF\UserRepository.cs" />
+    <Compile Include="Api\Repository\IUserRepository.cs" />
+    <Compile Include="Api\Repository\RepositoryLocator.cs" />
+    <Compile Include="Api\Repository\Memory\UsuarioRepositorio.cs" />
+    <Compile Include="Api\MessagesController.cs" />
+    <Compile Include="Api\UsersController.cs" />
+    <Compile Include="Migrations\201611221347210_First.cs" />
+    <Compile Include="Migrations\201611221347210_First.Designer.cs">
+      <DependentUpon>201611221347210_First.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -200,10 +200,9 @@
   <ItemGroup>
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201611171726578_first.resx">
-      <DependentUpon>201611171726578_first.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201611221347210_First.resx">
+      <DependentUpon>201611221347210_First.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

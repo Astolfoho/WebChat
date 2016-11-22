@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Chat.Api.Repositorios.EF
+namespace Chat.Api.Repository.EF
 {
     public class DBContext : DbContext
     {
@@ -15,7 +15,7 @@ namespace Chat.Api.Repositorios.EF
         {
         }
 
-        public DbSet<Usuario> Usuarios { get; set; }
-        public DbSet<Menssagem> Menssagens { get; set; }
+        public DbSet<User> Users { get; set; }
+        public DbSet<Message> Messages { get; set; }
     }
 }

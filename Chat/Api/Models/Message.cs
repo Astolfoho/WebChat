@@ -7,18 +7,18 @@ using System.Threading.Tasks;
 
 namespace Chat.Api.Models
 {
-    public class Menssagem
+    public class Message
     {
         public Guid Id { get; set; }
-        public int De { get; set; }
-        public int Para { get; set; }
-        public String Conteudo { get; set; }
+        public int From { get; set; }
+        public int To { get; set; }
+        public String Content { get; set; }
         public DateTime SendDateTime { get; set; }
 
         [NotMapped]
-        public string NomeUsuarioDe { get; set; }
+        public string NameFrom { get; set; }
 
         [NotMapped]
-        public bool SouEu { get; set; }
+        public bool ItsMe { get; set; }
     }
 }

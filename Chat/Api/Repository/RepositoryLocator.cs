@@ -5,25 +5,25 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Chat.Api.Repositorios
+namespace Chat.Api.Repository
 {
-    public class LocalizadorDeRepozitorios
+    public class RepositoryLocator
     {
-        public static T Pegar<T>()
+        public static T Get<T>()
         {
-            return PegarEF<T>();
+            return GetEF<T>();
         }
 
-        private static T PegarMemoria<T>()
+        private static T GetMemory<T>()
         {
             var types = Assembly.GetExecutingAssembly().GetTypes().Where(w => typeof(T).IsAssignableFrom(w));
             var type = types.FirstOrDefault(f => f.IsInterface == false 
-                                    && f.Namespace.EndsWith("Memoria", StringComparison.InvariantCultureIgnoreCase));
+                                    && f.Namespace.EndsWith("Memory", StringComparison.InvariantCultureIgnoreCase));
             var instance = Activator.CreateInstance(type);
             return (T)instance;
         }
 
-        private static T PegarEF<T>()
+        private static T GetEF<T>()
         {
             var types = Assembly.GetExecutingAssembly().GetTypes().Where(w => typeof(T).IsAssignableFrom(w));
             var type = types.FirstOrDefault(f => f.IsInterface == false
