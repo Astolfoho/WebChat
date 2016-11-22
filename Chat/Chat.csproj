@@ -166,6 +166,12 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="bower_components\paper-checkbox\.gitignore" />
+    <Content Include="bower_components\paper-checkbox\demo\index.html" />
+    <Content Include="bower_components\paper-checkbox\index.html" />
+    <Content Include="bower_components\paper-checkbox\paper-checkbox.html" />
+    <Content Include="bower_components\paper-checkbox\test\basic.html" />
+    <Content Include="bower_components\paper-checkbox\test\index.html" />
     <Content Include="chat-alt-outline.png" />
     <Content Include="components\ch-chat-message.html" />
     <Content Include="components\ch-emoji-btn.html" />
@@ -176,6 +182,12 @@
     </Content>
     <Content Include="bower.json" />
     <Content Include="emoji.json" />
+    <Content Include="bower_components\paper-checkbox\.bower.json" />
+    <Content Include="bower_components\paper-checkbox\.github\ISSUE_TEMPLATE.md" />
+    <Content Include="bower_components\paper-checkbox\.travis.yml" />
+    <Content Include="bower_components\paper-checkbox\bower.json" />
+    <Content Include="bower_components\paper-checkbox\CONTRIBUTING.md" />
+    <Content Include="bower_components\paper-checkbox\README.md" />
     <None Include="scripts\jquery-1.6.4-vsdoc.js" />
     <Content Include="scripts\jquery-1.6.4.js" />
     <Content Include="scripts\jquery-1.6.4.min.js" />
