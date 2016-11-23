@@ -23,13 +23,18 @@
                 box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.75);
                 margin-top: 5px;
                 min-width: 100px;
-
             }
 
-                :host #text.me {
-                    float: right;
-                    background-color: white;
-                }
+
+            a, a:visited {
+                color: blue !important;
+                text-decoration: none !important;
+            }
+
+            :host #text.me {
+                float: right;
+                background-color: white;
+            }
 
             :host ul {
                 list-style-type: none;
@@ -37,28 +42,28 @@
                 margin: 0;
             }
 
-            :host ul .nome{
-                font-size:80%;
-                text-align:right;
-                font-weight:bold;
-                color:cornflowerblue;
-            }
+                :host ul .nome {
+                    font-size: 80%;
+                    text-align: right;
+                    font-weight: bold;
+                    color: cornflowerblue;
+                }
 
-            :host ul .conteudo{
-                font-size: 22px;
-            }
+                :host ul .conteudo {
+                    font-size: 22px;
+                }
         </style>
 
         <div id="text" class$="{{_msgClass(me)}}">
             <ul>
                 <li class="nome">{{nomeUsuario}}</li>
-                <li class="conteudo">{{text}}</li>
+                <li class="conteudo" inner-h-t-m-l="{{_parse(text)}}"></li>
             </ul>
         </div>
     </template>
 
     <script>
-
+        var urlRegex = /((ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?)/g;
         Polymer({
             is: "ch-chat-message",
             properties: {
@@ -68,6 +73,18 @@
             },
             _msgClass: function (me) {
                 return me ? "me" : "other";
+            },
+            _parse(message) {
+                var ret = message || "";
+
+                ret = ret.replace(/</g, "&lt;").replace(/>/g, "&gt;");
+
+
+
+                if (urlRegex.test(message)) {
+                    ret = ret.replace(urlRegex, '<a href="\$1" target="_blank">\$1</a>');
+                }
+                return ret;
             }
         });
 

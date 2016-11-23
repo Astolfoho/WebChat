@@ -11,6 +11,9 @@
 <link rel="import" href="../bower_components/paper-input/paper-input.html" />
 <link rel="import" href="../bower_components/paper-button/paper-button.html" />
 <link rel="import" href="../bower_components/paper-checkbox/paper-checkbox.html" />
+<link rel="import" href="../bower_components/paper-menu-button/paper-menu-button.html" />
+<link rel="import" href="../bower_components/paper-menu/paper-menu.html" />
+<link rel="import" href="../bower_components/paper-item/paper-item.html" />
 <link rel="import" href="./ch-chat.html" />
 <link rel="import" href="../bower_components/iron-icons/communication-icons.html" />
 
@@ -33,8 +36,11 @@
                 display: block;
                 margin-top: 30px;
             }
-            :host [drawer] paper-checkbox{
-                margin: 5px 20px;
+            :host [drawer] paper-input{
+                padding: 0px 15px;
+            }
+
+            :host .title{
             }
 
             :host .usuarios{
@@ -45,15 +51,35 @@
         <!--<iron-ajax auto id="onlineUsersAjax" url="/api/Usuarios"  on-response="_addTimeout" handle-as="json" last-response="{{users}}"></iron-ajax>-->
         <iron-ajax id="postUser" url="/api/Users" method="POST" body="{{user}}" last-response="{{user}}" on-response="_userSaved" handle-as="json" content-type="application/json"></iron-ajax>
         <paper-header-panel>
-            <paper-toolbar class="paper-header">
-                <paper-icon-button icon="menu" on-click="_tooglePanel"></paper-icon-button>
-                <div class="title">Chat{{selectedUserName}}</div>
-                <paper-icon-button icon="delete" on-click="_clearUser">></paper-icon-button>
+            <paper-toolbar class="paper-header column">
+                <template is="dom-if" if="{{narrow}}">
+                    <paper-icon-button icon="menu" on-click="_tooglePanel" ></paper-icon-button>
+                </template>
+                <template is="dom-if" if="{{!narrow}}">
+                    <paper-menu-button vertical-align="top" horizontal-align="left">
+                        <paper-icon-button icon="more-vert" class="dropdown-trigger"></paper-icon-button>
+                        <paper-menu class="dropdown-content">
+                            <paper-item><paper-checkbox checked={{showOffline::change}}>Mostrar Off-line</paper-checkbox></paper-item>
+                            <paper-item on-click="_clearUser">Limpar Usuario</paper-item>
+                        </paper-menu>
+                    </paper-menu-button>
+                </template>
+                <div class="title flex">Chat{{selectedUserName}}</div>
+                <template is="dom-if" if="{{narrow}}">
+                    <paper-menu-button vertical-align="top" horizontal-align="right">
+                        <paper-icon-button icon="more-vert" class="dropdown-trigger"></paper-icon-button>
+                        <paper-menu class="dropdown-content">
+                            <paper-item><paper-checkbox checked={{showOffline::change}}>Mostrar Off-line</paper-checkbox></paper-item>
+                            <paper-item on-click="_clearUser">Limpar Usuario</paper-item>
+                        </paper-menu>
+                    </paper-menu-button>
+                </template>
+                <!--<paper-icon-button icon="delete" on-click="_clearUser">></paper-icon-button>-->
             </paper-toolbar>
-            <paper-drawer-panel id="drawer">
+            <paper-drawer-panel drawer-focus-selector="null"  id="drawer" on-paper-responsive-change="_responsiveChange">
                 <div drawer class="column">
                     <paper-input placeholder="Filtrar" value={{usersFilter::input}}></paper-input>
-                    <paper-checkbox checked={{showOffline::change}}>Mostrar Off-line</paper-checkbox>
+                    
                     <ul class="usuarios flex"  >
                         <template is="dom-repeat" items="{{_getUsers(users,showOffline, usersFilter)}}">
                             <template is="dom-if" if="{{_isMe(item.id)}}">
@@ -236,6 +262,11 @@
                 window.localStorage.clear();
                 window.location.assign("/");
             },
+
+            _responsiveChange: function (ev) {
+                this.narrow = ev.detail.narrow;
+            },
+
             _getUsers(users, showOffline, filter) {
                 if (!users || showOffline) {
                     return users;

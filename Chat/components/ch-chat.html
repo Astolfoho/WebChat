@@ -34,9 +34,9 @@
                 </ch-chat-message>
             </template>
         </div>
-        <paper-input inputmode="latin-prose" placeholder="Mensagem" value="{{menssagem::input}}" style="background-color:#fff;" on-keydown="_enviarMensagemKp">
+        <paper-input inputmode="latin-prose" placeholder="Mensagem" value="{{menssagem::input}}" style="background-color:#fff;" on-keydown="_sendMessageKp">
             <ch-emoji-btn id="btnEmojis" on-emoji-selected="_addEmoji" prefix ></ch-emoji-btn>
-            <paper-icon-button icon="send" on-tap="_enviarMensagem" suffix></paper-icon-button>
+            <paper-icon-button icon="send" on-tap="_sendMessage" suffix></paper-icon-button>
         </paper-input>
     </template>
 
@@ -68,7 +68,7 @@
                 }
 
             },
-            _enviarMensagem: function () {
+            _sendMessage: function () {
                 if (this.menssagem.trim() === "") {
                     return;
                 }
@@ -92,11 +92,11 @@
                 this.menssagem = "";
                 
             },
-            _enviarMensagemKp: function (e) {
+            _sendMessageKp: function (e) {
                 // check if 'enter' was pressed
                 if (e.keyCode === 13) {
                     // enter pressed!
-                    this._enviarMensagem();
+                    this._sendMessage();
                 }
 
             },
@@ -112,6 +112,8 @@
             }
 
         });
+
+
 
         
 

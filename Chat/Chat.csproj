@@ -251,4 +251,11 @@
   <Target Name="AfterBuild">
   </Target>
   -->
+
+  <Target Name="AdditionalFilesForPackage" AfterTargets="CopyAllFilesToSingleFolderForMsdeploy">
+    <ItemGroup>
+      <Files Include="bower_components\**\*.*"/>
+    </ItemGroup>
+    <Copy SourceFiles="@(Files)" DestinationFolder="$(_PackageTempDir)\bower_components\%(RecursiveDir)" />
+  </Target>
 </Project>
