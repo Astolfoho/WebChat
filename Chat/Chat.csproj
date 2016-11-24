@@ -126,6 +126,8 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="components\ch-chat-attach.html" />
+    <Content Include="content\cabinet.png" />
     <Content Include="content\message.png" />
     <Content Include="content\chat-alt-outline.png" />
     <Content Include="components\ch-chat-message.html" />
@@ -169,20 +171,30 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Api\BaseController.cs" />
+    <Compile Include="Api\FilesController.cs" />
     <Compile Include="Api\Hubs\ChatHub.cs" />
     <Compile Include="Api\Hubs\SignalRContractResolver.cs" />
+    <Compile Include="Api\Models\MessageResponse.cs" />
     <Compile Include="Api\Models\Message.cs" />
+    <Compile Include="Api\Models\MessageFileHeader.cs" />
+    <Compile Include="Api\Models\MessageFile.cs" />
     <Compile Include="Api\Models\User.cs" />
     <Compile Include="Api\Repository\EF\DBContext.cs" />
+    <Compile Include="Api\Repository\EF\MessageFileRepository.cs" />
     <Compile Include="Api\Repository\EF\UserRepository.cs" />
+    <Compile Include="Api\Repository\IMessageFileRepository.cs" />
     <Compile Include="Api\Repository\IUserRepository.cs" />
     <Compile Include="Api\Repository\RepositoryLocator.cs" />
     <Compile Include="Api\Repository\Memory\UsuarioRepositorio.cs" />
     <Compile Include="Api\MessagesController.cs" />
     <Compile Include="Api\UsersController.cs" />
-    <Compile Include="Migrations\201611221347210_First.cs" />
-    <Compile Include="Migrations\201611221347210_First.Designer.cs">
-      <DependentUpon>201611221347210_First.cs</DependentUpon>
+    <Compile Include="Migrations\201611241900478_first.cs" />
+    <Compile Include="Migrations\201611241900478_first.Designer.cs">
+      <DependentUpon>201611241900478_first.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201611242007396_messageflfk.cs" />
+    <Compile Include="Migrations\201611242007396_messageflfk.Designer.cs">
+      <DependentUpon>201611242007396_messageflfk.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -201,15 +213,18 @@
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201611221347210_First.resx">
-      <DependentUpon>201611221347210_First.cs</DependentUpon>
-    </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\Scaleout\Scaleout.csproj">
       <Project>{11189383-8c6b-4485-9b5f-4f1510a7c041}</Project>
       <Name>Scaleout</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201611241900478_first.resx">
+      <DependentUpon>201611241900478_first.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201611242007396_messageflfk.resx">
+      <DependentUpon>201611242007396_messageflfk.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
@@ -251,10 +266,9 @@
   <Target Name="AfterBuild">
   </Target>
   -->
-
   <Target Name="AdditionalFilesForPackage" AfterTargets="CopyAllFilesToSingleFolderForMsdeploy">
     <ItemGroup>
-      <Files Include="bower_components\**\*.*"/>
+      <Files Include="bower_components\**\*.*" />
     </ItemGroup>
     <Copy SourceFiles="@(Files)" DestinationFolder="$(_PackageTempDir)\bower_components\%(RecursiveDir)" />
   </Target>

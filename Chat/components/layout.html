@@ -169,7 +169,7 @@
 
                     }
 
-                    if (msg.de == this.selected) {
+                    if (msg.from == this.selected) {
                         if (window.onMessageReceived)
                             window.onMessageReceived(msg);
 
@@ -177,7 +177,7 @@
                     }
 
                     for (var i = 0 ; i < this.users.length; i++) {
-                        var usr = this.usuarios[i];
+                        var usr = this.users[i];
                         if (usr.id == msg.from) {
                             var um = usr.unreadMsgs || 0;
                             um++;

@@ -1,0 +1,104 @@
+﻿<link rel="import" href="../../bower_components/polymer/polymer.html" />
+<link rel="import" href="../../bower_components/iron-icons/iron-icons.html" />_
+<link rel="import" href="../../bower_components/iron-icons/image-icons.html" />_
+<link rel="import" href="../../bower_components/iron-icons/editor-icons.html" />_
+<link rel="import" href="../../bower_components/iron-icon/iron-icon.html" />_
+<link rel="import" href="../../bower_components/paper-fab/paper-fab.html" />
+
+<dom-module id="ch-chat-attach">
+    <style>
+        :host{
+            position:relative;
+        }
+
+        .menu{
+            padding:0;
+        }
+
+        .items{
+            position:absolute;
+            overflow:hidden;
+            z-index:2;
+            bottom:55px;
+            transition: max-height .6s;
+        }
+
+        .items.show{
+            max-height:200px;
+        }
+
+        .items.hide{
+            max-height:0;
+        }
+
+        .items paper-fab{
+            margin-bottom:3px;
+            --accent-color:#03A9F4;
+        }
+
+
+    </style>
+    <template>
+
+        <div  class$="items {{_statusClass(opened)}}">
+            <paper-fab icon="editor:attach-file" on-tap="_addFile"></paper-fab>
+            <paper-fab icon="image:image" on-tap="_addImage"></paper-fab>
+            <paper-fab icon="image:camera-alt"></paper-fab>
+        </div>
+        <paper-icon-button icon="add" class="dropdown-trigger" on-tap="_toogle"></paper-icon-button>
+
+        
+
+
+        <!--<paper-menu-button class="menu" vertical-align="bottom" horizontal-align="left">
+            <paper-icon-button icon="add" class="dropdown-trigger"></paper-icon-button>
+            <paper-menu class="dropdown-content">
+                <paper-item><iron-icon icon="image:image"></iron-icon></paper-item>
+            </paper-menu>
+        </paper-menu-button-->>
+    </template>
+    <script>
+        Polymer({
+            is: "ch-chat-attach",
+            ready: function () {
+                this.opened = false;
+            },
+            _toogle:function() {
+                this.opened = !this.opened;
+            },
+            _statusClass: function() {
+                return this.opened ? "show" : "hide";
+            },
+            close: function () {
+                this.opened = false;
+            },
+            _addImage: function () {
+               this._add("image/*","image")
+            },
+            _addFile: function () {
+                this._add(undefined,"file")
+            },
+            _add: function (filter,type) {
+                var context = this;
+                var file = document.createElement("input");
+                file.type = "file";
+                file.multiple = true;
+                file.accept = filter;
+                file.style.visibility = "hidden";
+                document.body.appendChild(file);
+                file.click();
+                file.onchange = function (ev) {
+                    var files = ev.target.files;
+                    for (var i = 0, file; file = files[i]; i++) {
+                        context.fire('file-selected', { file: file, type : type });
+                    }
+                }
+            }
+
+        });
+
+
+
+    </script>
+
+</dom-module>

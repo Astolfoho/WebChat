@@ -26,9 +26,9 @@
             }
 
 
-            a, a:visited {
-                color: blue !important;
-                text-decoration: none !important;
+            ul li a, ul li a:visited {
+                color: blue;
+                text-decoration: none;
             }
 
             :host #text.me {
@@ -57,6 +57,14 @@
         <div id="text" class$="{{_msgClass(me)}}">
             <ul>
                 <li class="nome">{{nomeUsuario}}</li>
+                <template is="dom-repeat" items="{{files}}">
+                    <template is="dom-if" if="{{!_file(item.type)}}">
+                        <li><img style="margin:5px;max-height:300px;max-width:300px" src="{{item.content}}" /></li>
+                    </template>
+                    <template is="dom-if" if="{{_file(item.type)}}">
+                        <li><a href="{{_downloadUrl(item)}}" target="_blank"><img style="margin:5px;max-height:60px;max-width:60px" src="/content/cabinet.png" title="{{item.name}}" /></a></li>
+                    </template>
+                </template>
                 <li class="conteudo" inner-h-t-m-l="{{_parse(text)}}"></li>
             </ul>
         </div>
@@ -69,7 +77,8 @@
             properties: {
                 text: String,
                 me: Boolean,
-                nomeUsuario: String
+                nomeUsuario: String,
+                files:Array
             },
             _msgClass: function (me) {
                 return me ? "me" : "other";
@@ -78,13 +87,16 @@
                 var ret = message || "";
 
                 ret = ret.replace(/</g, "&lt;").replace(/>/g, "&gt;");
-
-
-
                 if (urlRegex.test(message)) {
                     ret = ret.replace(urlRegex, '<a href="\$1" target="_blank">\$1</a>');
                 }
                 return ret;
+            },
+            _downloadUrl: function (item) {
+                return `/api/files/${item.id}`;
+            },
+            _file: function (type) {
+                return type == "file";
             }
         });
 

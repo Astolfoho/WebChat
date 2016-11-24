@@ -9,6 +9,7 @@ namespace Chat.Api.Models
 {
     public class Message
     {
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public Guid Id { get; set; }
         public int From { get; set; }
         public int To { get; set; }
@@ -20,5 +21,6 @@ namespace Chat.Api.Models
 
         [NotMapped]
         public bool ItsMe { get; set; }
+        public IEnumerable<MessageFile> Files { get; set; }
     }
 }

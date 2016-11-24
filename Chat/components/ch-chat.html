@@ -12,39 +12,58 @@
 <link rel="import" href="../../bower_components/paper-button/paper-button.html" />
 <link rel="import" href="./ch-chat-message.html" />
 <link rel="import" href="./ch-emoji-btn.html" />
+<link rel="import" href="./ch-chat-attach.html" />
 
 <dom-module id="ch-chat">
     <template>
         <style>
             #menssagens {
                 padding: 10px;
-                overflow-y:auto;
+                overflow-y: auto;
             }
 
-            :host{
-                display:flex;
-                flex-direction:column;
-                flex:1 1 100%;
+            :host {
+                display: flex;
+                flex-direction: column;
+                flex: 1 1 100%;
+            }
+
+            .chat-comands {
+                padding: 5px;
+                height: 45px;
+            }
+
+                .chat-comands [type="text"] {
+                    font-size: 22px;
+                }
+
+            #filesArea {
+                text-align: center;
             }
         </style>
         <iron-ajax id="ajaxMenssagens" url="/api/Messages" method="GET" handle-as="json" last-response="{{menssagens}}" content-type="application/json"></iron-ajax>
         <div id="menssagens" on-tap="_closeEmojis" class="flex column-reverse msg-panel">
             <template is="dom-repeat" items="{{menssagens}}">
-                <ch-chat-message text="{{item.content}}" nome-usuario="{{item.nameFrom}}" me="{{_souEu(item.from)}}">
+                <ch-chat-message text="{{item.content}}" nome-usuario="{{item.nameFrom}}" files="{{item.files}}" me="{{_souEu(item.from)}}">
                 </ch-chat-message>
             </template>
         </div>
-        <paper-input inputmode="latin-prose" placeholder="Mensagem" value="{{menssagem::input}}" style="background-color:#fff;" on-keydown="_sendMessageKp">
-            <ch-emoji-btn id="btnEmojis" on-emoji-selected="_addEmoji" prefix ></ch-emoji-btn>
-            <paper-icon-button icon="send" on-tap="_sendMessage" suffix></paper-icon-button>
-        </paper-input>
+        <div id="filesArea"></div>
+        <div class="row chat-comands">
+
+            <ch-chat-attach id="btnAttach" on-file-selected="_fileSelected"></ch-chat-attach>
+            <ch-emoji-btn id="btnEmojis" on-emoji-selected="_addEmoji"></ch-emoji-btn>
+            <input type="text" value="{{menssagem::input}}" class="flex" placeholder="Mensagem" on-keydown="_sendMessageKp" />
+            <paper-icon-button icon="send" on-tap="_sendMessage"></paper-icon-button>
+        </div>
+
     </template>
 
     <script>
 
         Polymer({
             is: "ch-chat",
-            properties:{
+            properties: {
                 selectedId: Number
             },
             attached: function () {
@@ -55,6 +74,7 @@
                         mes.text = msg.content;
                         mes.me = false;
                         mes.nomeUsuario = msg.nameFrom;
+                        mes.files = msg.files;
                         this.$.menssagens.insertBefore(mes, this.$.menssagens.firstChild);
                     }.bind(this);
 
@@ -69,16 +89,11 @@
 
             },
             _sendMessage: function () {
-                if (this.menssagem.trim() === "") {
+                if (this.menssagem.trim() === "" && this.$.filesArea.children.length === 0) {
                     return;
                 }
 
-                var mes = document.createElement("ch-chat-message");
-                mes.text = this.menssagem;
-                mes.me = true;
-                mes.nomeUsuario = window.user.name;
 
-                this.$.menssagens.insertBefore(mes, this.$.menssagens.firstChild);
 
                 var msg = {};
                 msg.from = window.user.id;
@@ -86,11 +101,35 @@
                 msg.content = this.menssagem;
                 msg.nameFrom = window.user.name;
 
+                msg.files = [];
+                for (var i = 0, img; img = this.$.filesArea.children[i]; i++) {
+                    var file = {};
+                    if(img.detail.type == "image"){
+                        file.type = "image";
+                        file.content = img.src;
+                    }else if(img.detail.type == "file"){
+                        file.type = "file";
+                        file.bytes = Array.from(new Uint8Array(img.buffer));
+                    }
+                    file.name = img.detail.file.name;
+                    msg.files.push(file);
+                }
+
+                var mes = document.createElement("ch-chat-message");
+                mes.text = this.menssagem;
+                mes.me = true;
+                mes.nomeUsuario = window.user.name;
+                mes.files = msg.files;
+
+                this.$.menssagens.insertBefore(mes, this.$.menssagens.firstChild);
+
+                this.$.filesArea.innerHTML = "";
                 window.chatHub.server.sendMessage(msg);
                 this.$.btnEmojis.close();
+                this.$.btnAttach.close();
 
                 this.menssagem = "";
-                
+
             },
             _sendMessageKp: function (e) {
                 // check if 'enter' was pressed
@@ -109,13 +148,43 @@
             },
             _closeEmojis: function () {
                 this.$.btnEmojis.close();
+                this.$.btnAttach.close();
+            },
+            _fileSelected: function (ev) {
+                var context = this;
+                var fr = new FileReader();
+
+                fr.onload = function () {
+                    var img = document.createElement("img");
+                    img.classList.add("thumb");
+                    if (ev.detail.type == "image") {
+                        img.src = fr.result;
+                    }else if(ev.detail.type == "file"){
+                        img.src = "/content/cabinet.png";
+                        img.buffer = fr.result;
+                    }
+                    img.width = 100;
+                    img.height = 100;
+                    img.style.margin = "5px";
+                    img.detail = ev.detail;
+                    context.$.filesArea.appendChild(img);
+                }
+                if (ev.detail.type == "image") {
+                    fr.readAsDataURL(ev.detail.file);
+                }else if(ev.detail.type == "file"){
+                    fr.readAsArrayBuffer(ev.detail.file);
+                }
+                this.$.btnAttach.close();
+
             }
+
+
 
         });
 
 
 
-        
+
 
     </script>
 

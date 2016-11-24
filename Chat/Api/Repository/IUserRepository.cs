@@ -21,7 +21,7 @@ namespace Chat.Api.Repository
 
 
         //todo Create Other repository for this
-        IEnumerable<Message> GetMessages(int us1, int us2);
+        IEnumerable<MessageResponse> GetMessages(int us1, int us2);
         void AddMessage(Message msg);
     }
 }

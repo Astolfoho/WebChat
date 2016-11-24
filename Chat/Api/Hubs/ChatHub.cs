@@ -22,7 +22,8 @@ namespace Chat.Api.Hubs
             var userTo = this._usersRep.GetAll().FirstOrDefault(w => w.Id == msg.To);
             msg.SendDateTime = DateTime.Now;
             _usersRep.AddMessage(msg);
-            this.Clients.Client(userTo.SignalrId).OnMessageReceived(msg);
+            var response = new MessageResponse(msg, msg.Files);
+            this.Clients.Client(userTo.SignalrId).OnMessageReceived(response);
         }
 
         public IEnumerable<User> GetUsers()

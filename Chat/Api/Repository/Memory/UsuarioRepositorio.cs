@@ -82,5 +82,9 @@ namespace Chat.Api.Repository.Memory
             _repMsg.Add(msg);
         }
 
+        IEnumerable<MessageResponse> IUserRepository.GetMessages(int us1, int us2)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

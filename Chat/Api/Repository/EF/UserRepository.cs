@@ -48,23 +48,39 @@ namespace Chat.Api.Repository.EF
             return _rep.Users.FirstOrDefault(f => f.Name.Equals(name, StringComparison.InvariantCultureIgnoreCase));
         }
 
-        public IEnumerable<Message> GetMessages(int us1, int us2)
+        public IEnumerable<MessageResponse> GetMessages(int us1, int us2)
         {
-            var ms1 = this._rep.Messages.Where(w => w.To == us1 && w.From == us2 || w.To == us2 && w.From == us1).OrderByDescending(o => o.SendDateTime);
-            var usrs = this.GetAll();
-            ms1.ToList().ForEach(f =>
-                {
-                    f.NameFrom = usrs.First(f2 => f2.Id == f.From).Name;
-                    f.ItsMe = f.From == us1;
-                });
-            return ms1;
+            var ret = (from m in this._rep.Messages
+                       where (m.To == us1 && m.From == us2)
+                            || (m.To == us2 && m.From == us1)
+                       orderby m.SendDateTime descending
+                       select m).ToList() ;
+
+
+
+            return ret.Select(s => {
+                var r = new MessageResponse(s, (from f in _rep.MessageFiles
+                                                where f.MessageId == s.Id
+                                                select f));
+                r.NameFrom = this._rep.Users.First(f2 => f2.Id == s.From).Name;
+                r.ItsMe = s.From == us1;
+                return r;
+            }
+            );
         }
 
         public void AddMessage(Message msg)
         {
-            msg.Id = Guid.NewGuid();
             _rep.Messages.Add(msg);
             _rep.SaveChanges();
+            foreach (var file in msg.Files)
+            {
+                file.MessageId = msg.Id;
+                _rep.MessageFiles.Add(file);
+            }
+            _rep.SaveChanges();
+
+
         }
 
     }
